@@ -15,9 +15,8 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build:package": "tsc",
-    "build:demo": "next build",
-    "lint": "eslint .",
-    "postbuild": "next-on-netlify"
+    "build:demo": "next build && next-on-netlify",
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "^17.0.1"

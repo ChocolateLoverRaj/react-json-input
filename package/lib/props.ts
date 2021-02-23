@@ -35,9 +35,19 @@ export interface RowProps {
 
 export type RowComponent = FunctionComponent<RowProps>
 
+export interface InputSelectorProps {
+  rootProps: ControlledProps<any>
+  schema: JSONSchema7
+  value: number
+  onChange: (newValue: number) => void
+}
+
+export type InputSelectorComponent = FunctionComponent<InputSelectorProps>
+
 export interface BaseProps {
   Container: ContainerComponent
   Row: RowComponent
+  InputSelector: InputSelectorComponent
   schema: JSONSchema7
   inputs: Input[]
 }

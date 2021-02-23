@@ -3,6 +3,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "declaration": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "outDir": "dist"
   }
 }

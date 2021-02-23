@@ -2,5 +2,7 @@
     "editor.tabSize": 2,
     "cSpell.words": [
         "Paranjpe"
-    ]
+    ],
+    "typescript.preferences.quoteStyle": "single",
+    "typescript.format.semicolons": "remove"
 }

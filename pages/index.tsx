@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import JsonInput from '../lib/index'
+import JsonInput from '../package/lib/JsonInput'
 
 const App: FC = () => <JsonInput />
 

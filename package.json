@@ -17,9 +17,10 @@
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build:package": "tsc",
+    "build:package": "tsc --project package",
     "build:demo": "next build && next-on-netlify",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev": "next"
   },
   "dependencies": {
     "react": "^17.0.1"

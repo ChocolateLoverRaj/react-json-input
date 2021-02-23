@@ -16,7 +16,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   let onChangeToUse: OnChange<T>
   if (value !== undefined) {
     valueToUse = value
-    onChangeToUse = onChange ?? never('Do not use `value` prop without an `onChange` handler. Use `readonly` prop instead.')
+    onChangeToUse = onChange ?? never('Do not use `value` prop without an `onChange` handler. Use `readOnly` prop instead.')
   } else {
     const [value, setValue] = useState<T>(defaultValue ?? '' as T) // TODO: Calculate default value based on schema
     valueToUse = value

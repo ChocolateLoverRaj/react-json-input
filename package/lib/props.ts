@@ -63,7 +63,7 @@ export interface BaseProps {
   Validation: ValidationComponent
   schema: JSONSchema7
   inputs: Input[]
-  readonly: boolean
+  readOnly: boolean
   disabled: boolean
 }
 

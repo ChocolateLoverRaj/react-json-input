@@ -3,7 +3,7 @@ import { Input, InputComponent } from '../props'
 
 const BooleanInputComponent: InputComponent<boolean> = props => {
   const { value, onChange, rootProps } = props
-  const { readonly, disabled } = rootProps
+  const { readOnly, disabled } = rootProps
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(({ target: { checked } }) => {
     onChange(checked)
@@ -14,7 +14,7 @@ const BooleanInputComponent: InputComponent<boolean> = props => {
       type='checkbox'
       checked={value}
       onChange={handleChange}
-      readOnly={readonly}
+      readOnly={readOnly}
       disabled={disabled}
     />
   )

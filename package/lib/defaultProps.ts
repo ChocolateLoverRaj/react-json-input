@@ -14,7 +14,7 @@ const defaultProps: BaseProps = {
   Validation: Validation,
   schema: {},
   inputs: [stringInput, numberInput, booleanInput],
-  readonly: false,
+  readOnly: false,
   disabled: false
 }
 

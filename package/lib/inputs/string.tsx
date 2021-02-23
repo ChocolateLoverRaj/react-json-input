@@ -3,7 +3,7 @@ import { Input, InputComponent } from '../props'
 
 const StringInputComponent: InputComponent<string> = props => {
   const { value, onChange, rootProps } = props
-  const { readonly, disabled } = rootProps
+  const { readOnly, disabled } = rootProps
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(({ target: { value } }) => {
     onChange(value)
@@ -13,7 +13,7 @@ const StringInputComponent: InputComponent<string> = props => {
     <input
       value={value}
       onChange={handleChange}
-      readOnly={readonly}
+      readOnly={readOnly}
       disabled={disabled}
     />
   )

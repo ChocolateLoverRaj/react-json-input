@@ -1,16 +1,20 @@
 import React from 'react'
 import { ContainerComponent } from './props'
 
-const Container: ContainerComponent<any> = props => {
-  const { schema } = props
-  const title = schema.title ?? 'root'
+const Container: ContainerComponent = props => {
+  const { rootProps } = props
+  const { schema, Row, value, onChange } = rootProps
+
   return (
     <table>
       <tbody>
-        <tr>
-          <th>{title}</th>
-          <td>Value coming soon</td>
-        </tr>
+        <Row
+          rootProps={rootProps}
+          schema={schema}
+          name=''
+          value={value}
+          onChange={onChange}
+        />
       </tbody>
     </table>
   )

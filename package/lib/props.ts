@@ -3,11 +3,43 @@ import { FunctionComponent } from 'react'
 
 export type OnChange<T> = (newValue: T) => void
 
-export type ContainerComponent<T> = FunctionComponent<ControlledProps<T>>
+export interface ContainerProps {
+  rootProps: ControlledProps<any>
+}
 
-export interface BaseProps<T> {
-  Container: ContainerComponent<T>
+export type ContainerComponent = FunctionComponent<ContainerProps>
+
+export type IsValid = (schema: JSONSchema7) => boolean
+
+export interface InputProps<T> {
+  rootProps: ControlledProps<any>
+  value: T
+  onChange: (neValue: T) => void
+}
+
+export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
+
+export interface Input {
+  name: string
+  isValid: IsValid
+  Component: InputComponent
+}
+
+export interface RowProps {
+  rootProps: ControlledProps<any>
   schema: JSONSchema7
+  name: string
+  value: any
+  onChange: (newValue: any) => void
+}
+
+export type RowComponent = FunctionComponent<RowProps>
+
+export interface BaseProps {
+  Container: ContainerComponent
+  Row: RowComponent
+  schema: JSONSchema7
+  inputs: Input[]
 }
 
 export interface DefaultValueProps<T> {
@@ -19,8 +51,8 @@ export interface ControlProps<T> {
   onChange: OnChange<T>
 }
 
-export type UncontrolledProps<T> = BaseProps<T> & Partial<ControlProps<T>> & Partial<DefaultValueProps<T>>
+export type UncontrolledProps<T> = BaseProps & Partial<ControlProps<T>> & Partial<DefaultValueProps<T>>
 
-export type ControlledProps<T> = BaseProps<T> & ControlProps<T> & Partial<DefaultValueProps<T>>
+export type ControlledProps<T> = BaseProps & ControlProps<T> & Partial<DefaultValueProps<T>>
 
 export type Props<T> = UncontrolledProps<T> | ControlledProps<T>

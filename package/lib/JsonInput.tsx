@@ -20,9 +20,11 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
 
   return (
     <Container
-      value={valueToUse}
-      onChange={handleChange}
-      {...restProps}
+      rootProps={{
+        value: valueToUse,
+        onChange: handleChange,
+        ...restProps
+      }}
     />
   )
 }

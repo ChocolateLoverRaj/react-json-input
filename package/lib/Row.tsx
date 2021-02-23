@@ -1,5 +1,7 @@
+import Ajv from 'ajv'
 import React, { useState } from 'react'
 import { RowComponent } from './props'
+import Validation from './Validation'
 
 const Row: RowComponent = props => {
   const { name, rootProps, schema, value, onChange } = props
@@ -10,9 +12,17 @@ const Row: RowComponent = props => {
   const [input, setInput] = useState(filteredInputs.findIndex(({ isType }) => isType(value)))
 
   const { Component } = filteredInputs[input]
+  const ajv = new Ajv()
+  const validate = ajv.compile(schema)
+  console.log(value)
+  validate(value)
+  const errors = validate.errors ?? undefined
 
   return (
     <tr>
+      <td>
+        <Validation rootProps={rootProps} errors={errors} />
+      </td>
       <th>{name}</th>
       <td>
         <Component

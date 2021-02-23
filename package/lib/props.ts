@@ -1,3 +1,4 @@
+import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
 import { FunctionComponent } from 'react'
 
@@ -48,10 +49,18 @@ export interface InputSelectorProps {
 
 export type InputSelectorComponent = FunctionComponent<InputSelectorProps>
 
+export interface ValidationProps {
+  rootProps: ControlledProps<any>
+  errors?: ErrorObject[]
+}
+
+export type ValidationComponent = FunctionComponent<ValidationProps>
+
 export interface BaseProps {
   Container: ContainerComponent
   Row: RowComponent
   InputSelector: InputSelectorComponent
+  Validation: ValidationComponent
   schema: JSONSchema7
   inputs: Input[]
   readonly: boolean

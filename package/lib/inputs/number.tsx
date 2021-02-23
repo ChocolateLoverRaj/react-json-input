@@ -3,12 +3,14 @@ import { Input, InputComponent } from '../props'
 import InputNumber from 'rc-input-number'
 
 const NumberInputComponent: InputComponent<number> = props => {
-  const { value, onChange } = props
+  const { value, onChange, rootProps } = props
+  const { readonly, disabled } = rootProps
 
   return (
     <InputNumber
       value={value}
       onChange={onChange}
+      disabled={disabled || readonly}
     />
   )
 }

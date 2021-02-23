@@ -52,6 +52,7 @@ export interface BaseProps {
   schema: JSONSchema7
   inputs: Input[]
   readonly: boolean
+  disabled: boolean
 }
 
 export interface DefaultValueProps<T> {

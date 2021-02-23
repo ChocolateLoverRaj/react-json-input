@@ -3,7 +3,7 @@ import { InputSelectorComponent } from './props'
 
 const InputSelector: InputSelectorComponent = props => {
   const { schema, rootProps, value, onChange } = props
-  const { inputs, readonly } = rootProps
+  const { inputs, readonly, disabled } = rootProps
 
   const handleChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(({ target: { value } }) => {
     onChange(parseInt(value))
@@ -13,7 +13,7 @@ const InputSelector: InputSelectorComponent = props => {
     <select
       value={value}
       onChange={handleChange}
-      disabled={readonly}
+      disabled={disabled || readonly}
     >
       {inputs
         .filter(({ isValid }) => isValid(schema))

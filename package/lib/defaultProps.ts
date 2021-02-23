@@ -11,7 +11,8 @@ const defaultProps: BaseProps = {
   InputSelector: InputSelector,
   schema: {},
   inputs: [stringInput, numberInput],
-  readonly: false
+  readonly: false,
+  disabled: false
 }
 
 export default defaultProps

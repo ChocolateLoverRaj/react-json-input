@@ -1,4 +1,5 @@
 import Container from './Container'
+import numberInput from './inputs/number'
 import stringInput from './inputs/string'
 import InputSelector from './InputSelector'
 import { BaseProps } from './props'
@@ -9,7 +10,7 @@ const defaultProps: BaseProps = {
   Row: Row,
   InputSelector: InputSelector,
   schema: {},
-  inputs: [stringInput]
+  inputs: [stringInput, numberInput]
 }
 
 export default defaultProps

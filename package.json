@@ -23,6 +23,7 @@
     "dev": "next"
   },
   "dependencies": {
+    "@types/json-schema": "^7.0.7",
     "react": "^17.0.1"
   },
   "devDependencies": {

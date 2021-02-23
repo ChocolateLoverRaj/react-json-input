@@ -3,14 +3,18 @@ import { InputSelectorComponent } from './props'
 
 const InputSelector: InputSelectorComponent = props => {
   const { schema, rootProps, value, onChange } = props
-  const { inputs } = rootProps
+  const { inputs, readonly } = rootProps
 
   const handleChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(({ target: { value } }) => {
     onChange(parseInt(value))
   }, [onChange])
 
   return (
-    <select value={value} onChange={handleChange}>
+    <select
+      value={value}
+      onChange={handleChange}
+      disabled={readonly}
+    >
       {inputs
         .filter(({ isValid }) => isValid(schema))
         .map(({ name }, i) => <option key={i} value={i}>{name}</option>)}

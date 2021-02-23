@@ -51,6 +51,7 @@ export interface BaseProps {
   InputSelector: InputSelectorComponent
   schema: JSONSchema7
   inputs: Input[]
+  readonly: boolean
 }
 
 export interface DefaultValueProps<T> {

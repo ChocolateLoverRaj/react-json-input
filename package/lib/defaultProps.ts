@@ -10,7 +10,8 @@ const defaultProps: BaseProps = {
   Row: Row,
   InputSelector: InputSelector,
   schema: {},
-  inputs: [stringInput, numberInput]
+  inputs: [stringInput, numberInput],
+  readonly: false
 }
 
 export default defaultProps

@@ -38,7 +38,7 @@ export type RowComponent = FunctionComponent<RowProps>
 
 export interface InputSelectorProps {
   rootProps: ControlledProps<any>
-  schema: JSONSchema7
+  inputs: Input[]
   value: number
   onChange: (newValue: number) => void
 }

@@ -3,10 +3,9 @@ import { FC } from 'react'
 import JsonInput from '../package/lib/JsonInput'
 
 const schema: JSONSchema7 = {
-  title: 'name',
-  type: 'number'
+  title: 'name'
 }
 
-const App: FC = () => <JsonInput schema={schema} defaultValue={2} disabled />
+const App: FC = () => <JsonInput schema={schema} defaultValue={2} />
 
 export default App

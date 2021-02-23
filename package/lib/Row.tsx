@@ -7,7 +7,8 @@ const Row: RowComponent = props => {
 
   const [input, setInput] = useState(0)
 
-  const { Component } = inputs[input]
+  const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
+  const { Component } = filteredInputs[input]
 
   return (
     <tr>
@@ -25,7 +26,7 @@ const Row: RowComponent = props => {
           rootProps={rootProps}
           value={input}
           onChange={setInput}
-          schema={schema}
+          inputs={filteredInputs}
         />
       </td>
     </tr>

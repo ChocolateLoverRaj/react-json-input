@@ -13,7 +13,7 @@ const InputSelector: InputSelectorComponent = props => {
     <select value={value} onChange={handleChange}>
       {inputs
         .filter(({ isValid }) => isValid(schema))
-        .map(({ name }, i) => <option value={i}>{name}</option>)}
+        .map(({ name }, i) => <option key={i} value={i}>{name}</option>)}
     </select>
   )
 }

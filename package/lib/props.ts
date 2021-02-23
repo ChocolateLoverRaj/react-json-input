@@ -15,6 +15,7 @@ export interface InputProps<T> {
   rootProps: ControlledProps<any>
   value: T
   onChange: (neValue: T) => void
+  schema: JSONSchema7
 }
 
 export type InputComponent<T = any> = FunctionComponent<InputProps<T>>

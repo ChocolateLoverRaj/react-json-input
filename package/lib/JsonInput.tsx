@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import never from 'never'
+import React, { useState } from 'react'
 import defaultProps from './defaultProps'
-import { Props } from './props'
+import { OnChange, Props } from './props'
 
 const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element => {
   const {
@@ -11,18 +12,22 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   } = { ...defaultProps, ...props }
   const { Container } = restProps
 
-  const [fallbackValue, setFallbackValue] = useState<T>(defaultValue ?? '' as T) // TODO: Calculate default value based on schema
-  const handleChange = useCallback((newValue: T) => {
-    onChange?.(newValue) ?? setFallbackValue(newValue)
-  }, [setFallbackValue, onChange])
-
-  const valueToUse = value ?? fallbackValue
+  let valueToUse: T
+  let onChangeToUse: OnChange<T>
+  if (value !== undefined) {
+    valueToUse = value
+    onChangeToUse = onChange ?? never('Do not use `value` prop without an `onChange` handler. Use `readonly` prop instead.')
+  } else {
+    const [value, setValue] = useState<T>(defaultValue ?? '' as T) // TODO: Calculate default value based on schema
+    valueToUse = value
+    onChangeToUse = setValue
+  }
 
   return (
     <Container
       rootProps={{
         value: valueToUse,
-        onChange: handleChange,
+        onChange: onChangeToUse,
         ...restProps
       }}
     />

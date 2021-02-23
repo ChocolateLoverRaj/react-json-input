@@ -14,7 +14,6 @@ const Row: RowComponent = props => {
   const { Component } = filteredInputs[input]
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
-  console.log(value)
   validate(value)
   const errors = validate.errors ?? undefined
 

@@ -1,4 +1,5 @@
 import Container from './Container'
+import booleanInput from './inputs/boolean'
 import numberInput from './inputs/number'
 import stringInput from './inputs/string'
 import InputSelector from './InputSelector'
@@ -12,7 +13,7 @@ const defaultProps: BaseProps = {
   InputSelector: InputSelector,
   Validation: Validation,
   schema: {},
-  inputs: [stringInput, numberInput],
+  inputs: [stringInput, numberInput, booleanInput],
   readonly: false,
   disabled: false
 }

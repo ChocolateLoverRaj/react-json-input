@@ -18,7 +18,8 @@ const NumberInputComponent: InputComponent<number> = props => {
 const numberInput: Input = {
   name: 'number',
   Component: NumberInputComponent,
-  isValid: schema => schema.type === undefined || schema.type === 'number'
+  isValid: schema => schema.type === undefined || schema.type === 'number',
+  isType: value => typeof value === 'number'
 }
 
 export default numberInput

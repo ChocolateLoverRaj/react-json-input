@@ -11,6 +11,8 @@ export type ContainerComponent = FunctionComponent<ContainerProps>
 
 export type IsValid = (schema: JSONSchema7) => boolean
 
+export type IsType = (value: any) => boolean
+
 export interface InputProps<T> {
   rootProps: ControlledProps<any>
   value: T
@@ -23,6 +25,7 @@ export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
 export interface Input {
   name: string
   isValid: IsValid
+  isType: IsType
   Component: InputComponent
 }
 

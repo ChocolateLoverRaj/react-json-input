@@ -5,9 +5,10 @@ const Row: RowComponent = props => {
   const { name, rootProps, schema, value, onChange } = props
   const { InputSelector, inputs } = rootProps
 
-  const [input, setInput] = useState(0)
-
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
+
+  const [input, setInput] = useState(filteredInputs.findIndex(({ isType }) => isType(value)))
+
   const { Component } = filteredInputs[input]
 
   return (

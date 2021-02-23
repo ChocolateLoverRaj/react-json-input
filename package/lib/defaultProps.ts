@@ -1,5 +1,5 @@
 import Container from './Container'
-import stringInput from './inputs/StringInput'
+import stringInput from './inputs/_stringInput'
 import InputSelector from './InputSelector'
 import { BaseProps } from './props'
 import Row from './Row'

@@ -1,21 +1,24 @@
 import React, { ChangeEventHandler, useCallback } from 'react'
 import { Input, InputComponent } from '../props'
+import rowProps from '../rowProps'
 
 const StringInputComponent: InputComponent<string> = props => {
   const { value, onChange, rootProps } = props
-  const { readOnly, disabled } = rootProps
+  const { readOnly, disabled, Row } = rootProps
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(({ target: { value } }) => {
     onChange(value)
   }, [onChange])
 
   return (
-    <input
-      value={value}
-      onChange={handleChange}
-      readOnly={readOnly}
-      disabled={disabled}
-    />
+    <Row {...rowProps(props)}>
+      <input
+        value={value}
+        onChange={handleChange}
+        readOnly={readOnly}
+        disabled={disabled}
+      />
+    </Row>
   )
 }
 

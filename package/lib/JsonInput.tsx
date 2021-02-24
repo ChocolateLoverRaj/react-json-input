@@ -1,3 +1,4 @@
+import Ajv from 'ajv'
 import never from 'never'
 import React, { useState } from 'react'
 import defaultProps from './defaultProps'
@@ -8,6 +9,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
     value,
     onChange,
     defaultValue,
+    schema,
     ...restProps
   } = { ...defaultProps, ...props }
   const { Container } = restProps
@@ -23,13 +25,20 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
     onChangeToUse = setValue
   }
 
+  const ajv = new Ajv()
+  const validate = ajv.compile(schema)
+  validate(valueToUse)
+  const { errors } = validate
+
   return (
     <Container
       rootProps={{
         value: valueToUse,
         onChange: onChangeToUse,
+        schema: schema,
         ...restProps
       }}
+      errors={errors ?? undefined}
     />
   )
 }

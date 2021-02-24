@@ -4,14 +4,16 @@ import numberInput from './inputs/number'
 import stringInput from './inputs/string'
 import InputSelector from './InputSelector'
 import { BaseProps } from './props'
-import Row from './Row'
+import InputChooser from './InputChooser'
 import Validation from './Validation'
+import Row from './Row'
 
 const defaultProps: BaseProps = {
   Container: Container,
-  Row: Row,
+  InputChooser: InputChooser,
   InputSelector: InputSelector,
   Validation: Validation,
+  Row: Row,
   schema: {},
   inputs: [stringInput, numberInput, booleanInput],
   readOnly: false,

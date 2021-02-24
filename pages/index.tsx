@@ -6,6 +6,6 @@ const schema: JSONSchema7 = {
   title: 'name'
 }
 
-const App: FC = () => <JsonInput schema={schema} defaultValue />
+const App: FC = () => <JsonInput schema={schema} defaultValue={3} />
 
 export default App

@@ -1,11 +1,12 @@
 import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 
 export type OnChange<T> = (newValue: T) => void
 
 export interface ContainerProps {
   rootProps: ControlledProps<any>
+  errors?: ErrorObject[]
 }
 
 export type ContainerComponent = FunctionComponent<ContainerProps>
@@ -19,6 +20,9 @@ export interface InputProps<T> {
   value: T
   onChange: (neValue: T) => void
   schema: JSONSchema7
+  children: ReactNode
+  errors?: ErrorObject[]
+  name: string
 }
 
 export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
@@ -30,15 +34,16 @@ export interface Input {
   Component: InputComponent
 }
 
-export interface RowProps {
+export interface InputChooserProps {
   rootProps: ControlledProps<any>
   schema: JSONSchema7
   name: string
   value: any
   onChange: (newValue: any) => void
+  errors?: ErrorObject[]
 }
 
-export type RowComponent = FunctionComponent<RowProps>
+export type InputChooserComponent = FunctionComponent<InputChooserProps>
 
 export interface InputSelectorProps {
   rootProps: ControlledProps<any>
@@ -56,11 +61,25 @@ export interface ValidationProps {
 
 export type ValidationComponent = FunctionComponent<ValidationProps>
 
+export interface RowPropsWithoutChildren {
+  rootProps: ControlledProps<any>
+  errors?: ErrorObject[]
+  name: string
+  inputSelector: ReactNode
+}
+
+export interface RowProps extends RowPropsWithoutChildren {
+  children: ReactNode
+}
+
+export type RowComponent = FunctionComponent<RowProps>
+
 export interface BaseProps {
   Container: ContainerComponent
-  Row: RowComponent
+  InputChooser: InputChooserComponent
   InputSelector: InputSelectorComponent
   Validation: ValidationComponent
+  Row: RowComponent
   schema: JSONSchema7
   inputs: Input[]
   readOnly: boolean

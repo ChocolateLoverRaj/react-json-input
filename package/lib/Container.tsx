@@ -2,18 +2,19 @@ import React from 'react'
 import { ContainerComponent } from './props'
 
 const Container: ContainerComponent = props => {
-  const { rootProps } = props
-  const { schema, Row, value, onChange } = rootProps
+  const { rootProps, errors } = props
+  const { schema, InputChooser, value, onChange } = rootProps
 
   return (
     <table>
       <tbody>
-        <Row
+        <InputChooser
           rootProps={rootProps}
           schema={schema}
           name=''
           value={value}
           onChange={onChange}
+          errors={errors}
         />
       </tbody>
     </table>

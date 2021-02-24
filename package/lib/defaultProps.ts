@@ -8,6 +8,7 @@ import InputChooser from './InputChooser'
 import Validation from './Validation'
 import Row from './Row'
 import nullInput from './inputs/null'
+import arrayInput from './inputs/array'
 
 const defaultProps: BaseProps = {
   Container: Container,
@@ -16,7 +17,7 @@ const defaultProps: BaseProps = {
   Validation: Validation,
   Row: Row,
   schema: {},
-  inputs: [stringInput, numberInput, booleanInput, nullInput],
+  inputs: [stringInput, numberInput, booleanInput, nullInput, arrayInput],
   readOnly: false,
   disabled: false
 }

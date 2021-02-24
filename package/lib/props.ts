@@ -23,6 +23,7 @@ export interface InputProps<T> {
   children: ReactNode
   errors?: ErrorObject[]
   name: string
+  onDelete?: () => void
 }
 
 export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
@@ -35,13 +36,16 @@ export interface Input<T = any> {
   Component: InputComponent<T>
 }
 
+export type ControlledPropsOnChange = (newValue: any) => void
+
 export interface InputChooserProps {
   rootProps: ControlledProps<any>
   schema: JSONSchema7
   name: string
   value: any
-  onChange: (newValue: any) => void
+  onChange: ControlledPropsOnChange
   errors?: ErrorObject[]
+  onDelete?: RowPropsWithoutChildrenOnDelete
 }
 
 export type InputChooserComponent = FunctionComponent<InputChooserProps>
@@ -64,11 +68,14 @@ export interface ValidationProps {
 
 export type ValidationComponent = FunctionComponent<ValidationProps>
 
+export type RowPropsWithoutChildrenOnDelete = () => void
+
 export interface RowPropsWithoutChildren {
   rootProps: ControlledProps<any>
   errors?: ErrorObject[]
   name: string
   inputSelector: ReactNode
+  onDelete?: RowPropsWithoutChildrenOnDelete
 }
 
 export interface RowProps extends RowPropsWithoutChildren {

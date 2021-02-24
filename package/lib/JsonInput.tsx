@@ -3,6 +3,7 @@ import never from 'never'
 import React, { useState } from 'react'
 import defaultProps from './defaultProps'
 import { OnChange, Props } from './props'
+import schemaToValue from './schemaToValue'
 
 const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element => {
   const {
@@ -22,7 +23,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   } else {
     // We use this conditionally because we expect the component to not switch between controlled and uncontrolled
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<T>(defaultValue ?? '' as T) // TODO: Calculate default value based on schema
+    const [value, setValue] = useState<T>(defaultValue ?? schemaToValue(schema))
     valueToUse = value
     onChangeToUse = setValue
   }

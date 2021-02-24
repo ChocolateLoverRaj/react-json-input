@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { InputChooserComponent, InputSelectorPropsOnchange } from './props'
 
 const InputChooser: InputChooserComponent = props => {
-  const { name, rootProps, schema, value, onChange, errors } = props
+  const { name, rootProps, schema, value, onChange, errors, onDelete } = props
   const { InputSelector, inputs } = rootProps
 
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
@@ -24,6 +24,7 @@ const InputChooser: InputChooserComponent = props => {
       schema={schema}
       errors={errors}
       name={name}
+      onDelete={onDelete}
     >
       <InputSelector
         rootProps={rootProps}

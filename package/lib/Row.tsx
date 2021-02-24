@@ -2,7 +2,7 @@ import React from 'react'
 import { RowComponent } from './props'
 
 const Row: RowComponent = props => {
-  const { rootProps, errors, name, children, inputSelector } = props
+  const { rootProps, errors, name, children, inputSelector, onDelete } = props
   const { Validation } = rootProps
 
   return (
@@ -13,6 +13,11 @@ const Row: RowComponent = props => {
       <th>{name}</th>
       <td>{children}</td>
       <td>{inputSelector}</td>
+      <td>
+        {onDelete !== undefined && (
+          <span onClick={onDelete}>{'\u2717'}</span>
+        )}
+      </td>
     </tr>
   )
 }

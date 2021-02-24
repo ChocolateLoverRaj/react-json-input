@@ -27,11 +27,12 @@ export interface InputProps<T> {
 
 export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
 
-export interface Input {
+export interface Input<T = any> {
   name: string
   isValid: IsValid
   isType: IsType
-  Component: InputComponent
+  to: (value: any) => T
+  Component: InputComponent<T>
 }
 
 export interface InputChooserProps {
@@ -45,11 +46,13 @@ export interface InputChooserProps {
 
 export type InputChooserComponent = FunctionComponent<InputChooserProps>
 
+export type InputSelectorPropsOnchange = (newValue: number) => void
+
 export interface InputSelectorProps {
   rootProps: ControlledProps<any>
   inputs: Input[]
   value: number
-  onChange: (newValue: number) => void
+  onChange: InputSelectorPropsOnchange
 }
 
 export type InputSelectorComponent = FunctionComponent<InputSelectorProps>

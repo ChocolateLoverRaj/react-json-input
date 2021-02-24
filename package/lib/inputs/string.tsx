@@ -26,7 +26,8 @@ const stringInput: Input = {
   name: 'string',
   Component: StringInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'string',
-  isType: value => typeof value === 'string'
+  isType: value => typeof value === 'string',
+  to: String
 }
 
 export default stringInput

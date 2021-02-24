@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { InputChooserComponent } from './props'
+import React, { useCallback, useState } from 'react'
+import { InputChooserComponent, InputSelectorPropsOnchange } from './props'
 
 const InputChooser: InputChooserComponent = props => {
   const { name, rootProps, schema, value, onChange, errors } = props
@@ -8,6 +8,11 @@ const InputChooser: InputChooserComponent = props => {
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
 
   const [input, setInput] = useState(filteredInputs.findIndex(({ isType }) => isType(value)))
+
+  const handleInputChange = useCallback<InputSelectorPropsOnchange>(index => {
+    setInput(index)
+    onChange(filteredInputs[index].to(value))
+  }, [setInput, onChange, filteredInputs, value])
 
   const { Component } = filteredInputs[input]
 
@@ -23,7 +28,7 @@ const InputChooser: InputChooserComponent = props => {
       <InputSelector
         rootProps={rootProps}
         value={input}
-        onChange={setInput}
+        onChange={handleInputChange}
         inputs={filteredInputs}
       />
     </Component>

@@ -20,6 +20,8 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
     valueToUse = value
     onChangeToUse = onChange ?? never('Do not use `value` prop without an `onChange` handler. Use `readOnly` prop instead.')
   } else {
+    // We use this conditionally because we expect the component to not switch between controlled and uncontrolled
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<T>(defaultValue ?? '' as T) // TODO: Calculate default value based on schema
     valueToUse = value
     onChangeToUse = setValue

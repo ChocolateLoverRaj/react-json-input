@@ -32,7 +32,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
 
   const [selectedInput, setSelectedInput] = useState<SelectedInput<any>>(getSelectedInput(input))
 
-  const ajv = new Ajv()
+  const ajv = new Ajv({ allErrors: true })
   const validate = ajv.compile(schema)
   validate(valueToUse)
   const { errors } = validate

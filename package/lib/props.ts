@@ -100,11 +100,18 @@ export interface RowProps extends RowPropsWithoutChildren {
 
 export type RowComponent = FunctionComponent<RowProps>
 
+export interface ValidationNoErrorsProps {
+  rootProps: ControlledProps<any>
+}
+
+export type ValidationNoErrorsComponent = FunctionComponent<ValidationNoErrorsProps>
+
 export interface BaseProps {
   Container: ContainerComponent<any>
   InputChooser: InputChooserComponent
   InputSelector: InputSelectorComponent
   Validation: ValidationComponent
+  ValidationNoErrors: ValidationNoErrorsComponent
   Row: RowComponent
   schema: JSONSchema7
   inputs: Array<Input<any, any>>

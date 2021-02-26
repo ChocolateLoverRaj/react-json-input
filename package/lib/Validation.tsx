@@ -2,10 +2,11 @@ import React from 'react'
 import { ValidationComponent } from './props'
 
 const Validation: ValidationComponent = props => {
-  const { errors } = props
+  const { errors, rootProps } = props
+  const { ValidationNoErrors } = rootProps
 
   return errors === undefined || errors.length === 0
-    ? <span>{'\u2713'}</span>
+    ? <ValidationNoErrors rootProps={rootProps} />
     : (
       <span
         title={errors

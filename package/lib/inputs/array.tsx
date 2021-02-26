@@ -15,7 +15,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onChange,
     inputData,
     onInputDataChange,
-    onDelete
+    onDelete,
+    errors
   } = props
   const { items } = schema
   const { InputChooser, inputs } = rootProps
@@ -34,6 +35,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onInputDataChange([...inputData, getSelectedInput(input)])
   }
 
+  console.log(errors)
+
   return (
     <>
       <tr>
@@ -44,6 +47,9 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       </tr>
       {value.map((element, i) => {
         const selectedInput = inputData[i]
+        const elementErrors = errors
+          ?.filter(error => error.dataPath.startsWith(`/${i}`))
+          .map(error => ({ ...error, dataPath: error.dataPath.slice(`/${i}`.length) }))
 
         const handleChange: ControlledPropsOnChange = newValue => {
           onChange([...value.slice(0, i), newValue, ...value.slice(i + 1)])
@@ -69,6 +75,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
             onDelete={handleDelete}
             selectedInput={selectedInput}
             onSelectedInputChange={handleSelectedInputChange}
+            errors={elementErrors}
           />
         )
       })}

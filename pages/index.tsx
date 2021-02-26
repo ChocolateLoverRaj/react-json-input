@@ -7,8 +7,17 @@ const schema: JSONSchema7 = {
   items: {
     type: 'array',
     items: {
-      type: 'string',
-      pattern: 'abc'
+      type: 'array',
+      items: {
+        type: 'array',
+        items: {
+          type: 'array',
+          items: {
+            type: 'string',
+            pattern: 'abc'
+          }
+        }
+      }
     }
   }
 }

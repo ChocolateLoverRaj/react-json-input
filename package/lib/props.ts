@@ -112,6 +112,12 @@ export interface ValidationErrorsProps extends PropsWithRootProps {
 
 export type ValidationErrorsComponent = FunctionComponent<ValidationErrorsProps>
 
+export interface InputNameProps extends PropsWithRootProps {
+  name: string
+}
+
+export type InputNameComponent = FunctionComponent<InputNameProps>
+
 export interface BaseProps {
   Container: ContainerComponent<any>
   InputChooser: InputChooserComponent
@@ -120,6 +126,7 @@ export interface BaseProps {
   ValidationNoErrors: ValidationNoErrorsComponent
   ValidationErrors: ValidationErrorsComponent
   Row: RowComponent
+  InputName: InputNameComponent
   schema: JSONSchema7
   inputs: Array<Input<any, any>>
   readOnly: boolean

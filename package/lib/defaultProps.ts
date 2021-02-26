@@ -10,6 +10,7 @@ import Row from './Row'
 import nullInput from './inputs/null'
 import arrayInput from './inputs/array'
 import ValidationNoErrors from './ValidationNoErrors'
+import ValidationErrors from './ValidationErrors'
 
 const defaultProps: BaseProps = {
   Container: Container,
@@ -17,6 +18,7 @@ const defaultProps: BaseProps = {
   InputSelector: InputSelector,
   Validation: Validation,
   ValidationNoErrors: ValidationNoErrors,
+  ValidationErrors: ValidationErrors,
   Row: Row,
   schema: {},
   inputs: [stringInput, numberInput, booleanInput, nullInput, arrayInput],

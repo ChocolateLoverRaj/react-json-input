@@ -3,18 +3,17 @@ import { ValidationComponent } from './props'
 
 const Validation: ValidationComponent = props => {
   const { errors, rootProps } = props
-  const { ValidationNoErrors } = rootProps
+  const { ValidationNoErrors, ValidationErrors } = rootProps
 
   return errors === undefined || errors.length === 0
     ? <ValidationNoErrors rootProps={rootProps} />
     : (
-      <span
-        title={errors
+      <ValidationErrors
+        rootProps={rootProps}
+        message={errors
           .map(({ message }) => message)
           .join('\n')}
-      >
-        {'\u2717'}
-      </span>
+      />
     )
 }
 

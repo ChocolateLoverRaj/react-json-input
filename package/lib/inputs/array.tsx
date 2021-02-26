@@ -19,7 +19,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     errors
   } = props
   const { items } = schema
-  const { InputChooser, inputs } = rootProps
+  const { InputChooser, inputs, ValidationNoErrors, ValidationErrors } = rootProps
 
   if (items instanceof Array) {
     throw new Error('Tuples not supported yet')
@@ -35,12 +35,17 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onInputDataChange([...inputData, getSelectedInput(input)])
   }
 
-  console.log(errors)
+  const arrayErrorMessage = errors !== undefined &&
+    `Error with elements ${errors.map(({ dataPath }) => dataPath.split('/', 2)[1]).toString()}`
 
   return (
     <>
       <tr>
-        <td>Validation Coming Soon</td>
+        <td>
+          {arrayErrorMessage === false
+            ? <ValidationNoErrors rootProps={rootProps} />
+            : <ValidationErrors rootProps={rootProps} message={arrayErrorMessage} />}
+        </td>
         <th>{name}</th>
         <td>{children}</td>
         <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>

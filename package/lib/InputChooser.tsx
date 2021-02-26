@@ -1,20 +1,41 @@
-import React, { useCallback, useState } from 'react'
-import { InputChooserComponent, InputSelectorPropsOnchange } from './props'
+import never from 'never'
+import React, { useCallback } from 'react'
+import { InputChooserComponent, InputSelectorPropsOnchange, OnInputDataChange } from './props'
 
 const InputChooser: InputChooserComponent = props => {
-  const { name, rootProps, schema, value, onChange, errors, onDelete } = props
+  const {
+    name,
+    rootProps,
+    schema,
+    value,
+    onChange,
+    errors,
+    onDelete,
+    selectedInput,
+    onSelectedInputChange
+  } = props
   const { InputSelector, inputs } = rootProps
+  const { name: selectedInputName, data: selectedInputData } = selectedInput
 
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
 
-  const [input, setInput] = useState(filteredInputs.findIndex(({ isType }) => isType(value)))
+  const handleInputChange = useCallback<InputSelectorPropsOnchange>(name => {
+    const {
+      getInitialInputData,
+      to
+    } = filteredInputs.find(({ name: currentName }) => currentName === name) ?? never('No input with that name')
+    onSelectedInputChange({
+      name: name,
+      data: getInitialInputData()
+    })
+    onChange(to(value))
+  }, [filteredInputs, onSelectedInputChange, value, onChange])
 
-  const handleInputChange = useCallback<InputSelectorPropsOnchange>(index => {
-    setInput(index)
-    onChange(filteredInputs[index].to(value))
-  }, [setInput, onChange, filteredInputs, value])
+  const handleInputDataChange = useCallback<OnInputDataChange<any>>(data => {
+    onSelectedInputChange({ ...selectedInput, data })
+  }, [onSelectedInputChange, selectedInput])
 
-  const { Component } = filteredInputs[input]
+  const { Component } = filteredInputs.find(({ name }) => name === selectedInputName) ?? never('No selected input with that name')
 
   return (
     <Component
@@ -25,10 +46,12 @@ const InputChooser: InputChooserComponent = props => {
       errors={errors}
       name={name}
       onDelete={onDelete}
+      inputData={selectedInputData}
+      onInputDataChange={handleInputDataChange}
     >
       <InputSelector
         rootProps={rootProps}
-        value={input}
+        value={selectedInputName}
         onChange={handleInputChange}
         inputs={filteredInputs}
       />

@@ -2,18 +2,20 @@ import Ajv from 'ajv'
 import never from 'never'
 import React, { useState } from 'react'
 import defaultProps from './defaultProps'
-import { OnChange, Props } from './props'
-import schemaToValue from './schemaToValue'
+import getSelectedInput from './getSelectedInput'
+import getValidInput from './getValidInput'
+import { OnChange, Props, SelectedInput } from './props'
 
 const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element => {
   const {
     value,
     onChange,
     defaultValue,
-    schema,
     ...restProps
   } = { ...defaultProps, ...props }
-  const { Container } = restProps
+  const { Container, schema, inputs } = restProps
+
+  const input = getValidInput(inputs, schema)
 
   let valueToUse: T
   let onChangeToUse: OnChange<T>
@@ -23,10 +25,12 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   } else {
     // We use this conditionally because we expect the component to not switch between controlled and uncontrolled
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<T>(defaultValue ?? schemaToValue(schema))
+    const [value, setValue] = useState<T>(defaultValue ?? input.to(undefined))
     valueToUse = value
     onChangeToUse = setValue
   }
+
+  const [selectedInput, setSelectedInput] = useState<SelectedInput<any>>(getSelectedInput(input))
 
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
@@ -38,10 +42,11 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
       rootProps={{
         value: valueToUse,
         onChange: onChangeToUse,
-        schema: schema,
         ...restProps
       }}
       errors={errors ?? undefined}
+      selectedInput={selectedInput}
+      onSelectedInputChange={setSelectedInput}
     />
   )
 }

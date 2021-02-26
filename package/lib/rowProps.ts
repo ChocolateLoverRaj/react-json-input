@@ -3,7 +3,7 @@ import { InputProps, RowPropsWithoutChildren } from './props'
 /**
  * Easily get `Row` props from `Input` props
  */
-const rowProps = (inputProps: InputProps<any>): RowPropsWithoutChildren => {
+const rowProps = (inputProps: InputProps<any, any>): RowPropsWithoutChildren => {
   const { rootProps, children, name, errors, onDelete } = inputProps
   return {
     rootProps: rootProps,

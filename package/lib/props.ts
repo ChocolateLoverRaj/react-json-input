@@ -4,39 +4,53 @@ import { FunctionComponent, ReactNode } from 'react'
 
 export type OnChange<T> = (newValue: T) => void
 
-export interface ContainerProps {
+export interface ContainerProps<T> {
   rootProps: ControlledProps<any>
   errors?: ErrorObject[]
+  selectedInput: SelectedInput<T>
+  onSelectedInputChange: OnSelectedInputChange<T>
 }
 
-export type ContainerComponent = FunctionComponent<ContainerProps>
+export type ContainerComponent<T> = FunctionComponent<ContainerProps<T>>
 
 export type IsValid = (schema: JSONSchema7) => boolean
 
 export type IsType = (value: any) => boolean
 
-export interface InputProps<T> {
+export type OnInputDataChange<T> = (newInputData: T) => void
+
+export interface InputProps<Value, InputData> {
   rootProps: ControlledProps<any>
-  value: T
-  onChange: (neValue: T) => void
+  value: Value
+  onChange: (neValue: Value) => void
   schema: JSONSchema7
   children: ReactNode
   errors?: ErrorObject[]
   name: string
   onDelete?: () => void
+  inputData: InputData
+  onInputDataChange: OnInputDataChange<InputData>
 }
 
-export type InputComponent<T = any> = FunctionComponent<InputProps<T>>
+export type InputComponent<Value = any, InputData = undefined> = FunctionComponent<InputProps<Value, InputData>>
 
-export interface Input<T = any> {
+export interface Input<Value = any, InputData = undefined> {
   name: string
   isValid: IsValid
   isType: IsType
-  to: (value: any) => T
-  Component: InputComponent<T>
+  to: (value: any) => Value
+  Component: InputComponent<Value, InputData>
+  getInitialInputData: () => InputData
 }
 
 export type ControlledPropsOnChange = (newValue: any) => void
+
+export interface SelectedInput<T> {
+  name: string
+  data: T
+}
+
+export type OnSelectedInputChange<T> = (newSelectedInput: SelectedInput<T>) => void
 
 export interface InputChooserProps {
   rootProps: ControlledProps<any>
@@ -46,16 +60,18 @@ export interface InputChooserProps {
   onChange: ControlledPropsOnChange
   errors?: ErrorObject[]
   onDelete?: RowPropsWithoutChildrenOnDelete
+  selectedInput: SelectedInput<any>
+  onSelectedInputChange: OnSelectedInputChange<any>
 }
 
 export type InputChooserComponent = FunctionComponent<InputChooserProps>
 
-export type InputSelectorPropsOnchange = (newValue: number) => void
+export type InputSelectorPropsOnchange = (newValue: string) => void
 
 export interface InputSelectorProps {
   rootProps: ControlledProps<any>
   inputs: Input[]
-  value: number
+  value: string
   onChange: InputSelectorPropsOnchange
 }
 
@@ -85,13 +101,13 @@ export interface RowProps extends RowPropsWithoutChildren {
 export type RowComponent = FunctionComponent<RowProps>
 
 export interface BaseProps {
-  Container: ContainerComponent
+  Container: ContainerComponent<any>
   InputChooser: InputChooserComponent
   InputSelector: InputSelectorComponent
   Validation: ValidationComponent
   Row: RowComponent
   schema: JSONSchema7
-  inputs: Input[]
+  inputs: Array<Input<any, any>>
   readOnly: boolean
   disabled: boolean
 }

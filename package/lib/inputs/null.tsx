@@ -10,12 +10,13 @@ const NullInputComponent: InputComponent<null> = props => {
   )
 }
 
-const nullInput: Input<null> = {
+const nullInput: Input<null, undefined> = {
   name: 'null',
   Component: NullInputComponent,
   isType: value => value === null,
   isValid: schema => schema.type === undefined || schema.type === 'null',
-  to: () => null
+  to: () => null,
+  getInitialInputData: () => undefined
 }
 
 export default nullInput

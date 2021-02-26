@@ -1,4 +1,5 @@
 import React from 'react'
+import DeleteButton from './deleteButton'
 import { RowComponent } from './props'
 
 const Row: RowComponent = props => {
@@ -13,11 +14,7 @@ const Row: RowComponent = props => {
       <th>{name}</th>
       <td>{children}</td>
       <td>{inputSelector}</td>
-      <td>
-        {onDelete !== undefined && (
-          <span onClick={onDelete}>{'\u2717'}</span>
-        )}
-      </td>
+      <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
     </tr>
   )
 }

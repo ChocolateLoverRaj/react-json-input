@@ -22,12 +22,13 @@ const StringInputComponent: InputComponent<string> = props => {
   )
 }
 
-const stringInput: Input = {
+const stringInput: Input<string, undefined> = {
   name: 'string',
   Component: StringInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'string',
   isType: value => typeof value === 'string',
-  to: String
+  to: String,
+  getInitialInputData: () => undefined
 }
 
 export default stringInput

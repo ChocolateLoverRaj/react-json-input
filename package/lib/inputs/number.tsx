@@ -22,7 +22,7 @@ const NumberInputComponent: InputComponent<number> = props => {
   )
 }
 
-const numberInput: Input = {
+const numberInput: Input<number, undefined> = {
   name: 'number',
   Component: NumberInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'number',
@@ -30,7 +30,8 @@ const numberInput: Input = {
   to: value => {
     const n = Number(value)
     return !Number.isNaN(n) ? n : 0
-  }
+  },
+  getInitialInputData: () => undefined
 }
 
 export default numberInput

@@ -23,12 +23,13 @@ const BooleanInputComponent: InputComponent<boolean> = props => {
   )
 }
 
-const booleanInput: Input = {
+const booleanInput: Input<boolean, undefined> = {
   name: 'boolean',
   Component: BooleanInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'boolean',
   isType: value => typeof value === 'boolean',
-  to: Boolean
+  to: Boolean,
+  getInitialInputData: () => undefined
 }
 
 export default booleanInput

@@ -5,8 +5,11 @@ import JsonInput from '../package/lib/JsonInput'
 const schema: JSONSchema7 = {
   type: 'array',
   items: {
-    type: 'string',
-    pattern: 'abc'
+    type: 'array',
+    items: {
+      type: 'string',
+      pattern: 'abc'
+    }
   }
 }
 

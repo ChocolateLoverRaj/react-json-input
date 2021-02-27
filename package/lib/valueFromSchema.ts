@@ -3,6 +3,6 @@ import getValidInput from './getValidInput'
 import { Input } from './props'
 
 const valueFromSchema = (inputs: Array<Input<any, any>>, schema: JSONSchema7): any => getValidInput(inputs, schema)
-  .to(undefined)
+  .to(undefined, schema, inputs)
 
 export default valueFromSchema

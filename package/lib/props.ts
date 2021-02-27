@@ -39,9 +39,9 @@ export interface Input<Value = any, InputData = undefined> {
   name: string
   isValid: IsValid
   isType: IsType
-  to: (value: any) => Value
+  to: (value: any, schema: JSONSchema7, inputs: Array<Input<any, any>>) => Value
   Component: InputComponent<Value, InputData>
-  getInitialInputData: () => InputData
+  getInitialInputData: (schema: JSONSchema7, inputs: Array<Input<any, any>>) => InputData
 }
 
 export type ControlledPropsOnChange = (newValue: any) => void

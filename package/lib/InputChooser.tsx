@@ -26,10 +26,10 @@ const InputChooser: InputChooserComponent = props => {
     } = filteredInputs.find(({ name: currentName }) => currentName === name) ?? never('No input with that name')
     onSelectedInputChange({
       name: name,
-      data: getInitialInputData()
+      data: getInitialInputData(schema, inputs)
     })
-    onChange(to(value))
-  }, [filteredInputs, onSelectedInputChange, value, onChange])
+    onChange(to(value, schema, inputs))
+  }, [filteredInputs, onSelectedInputChange, value, onChange, schema, inputs])
 
   const handleInputDataChange = useCallback<OnInputDataChange<any>>(data => {
     onSelectedInputChange({ ...selectedInput, data })

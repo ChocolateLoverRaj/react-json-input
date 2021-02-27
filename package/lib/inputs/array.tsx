@@ -5,6 +5,7 @@ import getElementName from '../getElementName'
 import getSelectedInput from '../getSelectedInput'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
+import valueFromSchema from '../valueFromSchema'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
   const {
@@ -36,17 +37,16 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
   }
 
   const itemSchema: JSONSchema7 = items ?? {}
+  const minItems = schema.minItems ?? 0
 
   const handleNewElement: MouseEventHandler<HTMLButtonElement> = () => {
     const input = getValidInput(inputs, itemSchema)
-    onChange([...value, input.to(undefined)])
-    onInputDataChange([...inputData, getSelectedInput(input)])
+    onChange([...value, input.to(undefined, itemSchema, inputs)])
+    onInputDataChange([...inputData, getSelectedInput(input, itemSchema, inputs)])
   }
 
   const arrayErrorMessage = errors !== undefined &&
     `Error with elements ${errors.map(({ dataPath }) => dataPath.split('/', 2)[1]).toString()}`
-
-  console.log(name, getElementName(name, 0, nameStyle))
 
   return (
     <>
@@ -71,10 +71,12 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           onChange([...value.slice(0, i), newValue, ...value.slice(i + 1)])
         }
 
-        const handleDelete: RowPropsWithoutChildrenOnDelete = () => {
-          onChange([...value.slice(0, i), ...value.slice(i + 1)])
-          onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])
-        }
+        const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = value.length > minItems
+          ? () => {
+            onChange([...value.slice(0, i), ...value.slice(i + 1)])
+            onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])
+          }
+          : undefined
 
         const handleSelectedInputChange: OnSelectedInputChange<any> = newSelectedInput => {
           onInputDataChange([...inputData.slice(0, i), newSelectedInput, ...inputData.slice(i + 1)])
@@ -82,7 +84,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
         return (
           <InputChooser
-            key={`${i} ${selectedInput.name}`}
+            key={i}
             rootProps={rootProps}
             name={getElementName(name, i, nameStyle)}
             schema={itemSchema}
@@ -111,8 +113,31 @@ const arrayInput: Input<any[], Array<SelectedInput<any>>> = {
   Component: ArrayInputComponent,
   isType: value => value instanceof Array,
   isValid: schema => schema.type === undefined || schema.type === 'array',
-  to: () => [],
-  getInitialInputData: () => []
+  to: (value, schema, inputs) => {
+    const { items } = schema
+    if (typeof items === 'boolean' || items instanceof Array) {
+      throw new Error('Tuples or booleans not supported')
+    }
+    const itemSchema: JSONSchema7 = items ?? {}
+    const arr: any[] = []
+    for (let i = 0; i < (schema.minItems ?? 0); i++) {
+      arr.push(valueFromSchema(inputs, itemSchema))
+    }
+    return arr
+  },
+  getInitialInputData: (schema, inputs) => {
+    const { items } = schema
+    if (typeof items === 'boolean' || items instanceof Array) {
+      throw new Error('Tuples or booleans not supported')
+    }
+    const itemSchema: JSONSchema7 = items ?? {}
+    const arr: Array<SelectedInput<any>> = []
+    for (let i = 0; i < (schema.minItems ?? 0); i++) {
+      const input = getValidInput(inputs, itemSchema)
+      arr.push(getSelectedInput(input, itemSchema, inputs))
+    }
+    return arr
+  }
 }
 
 export default arrayInput

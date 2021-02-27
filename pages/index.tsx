@@ -8,7 +8,8 @@ import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
   type: 'array',
-  minItems: 3
+  minItems: 3,
+  maxItems: 5
 }
 
 const App: FC = () => {

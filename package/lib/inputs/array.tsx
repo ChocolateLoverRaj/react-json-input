@@ -38,6 +38,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
   const itemSchema: JSONSchema7 = items ?? {}
   const minItems = schema.minItems ?? 0
+  const maxItems = schema.maxItems ?? Infinity
 
   const handleNewElement: MouseEventHandler<HTMLButtonElement> = () => {
     const input = getValidInput(inputs, itemSchema)
@@ -97,13 +98,15 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           />
         )
       })}
-      <tr>
-        <td></td>
-        <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
-        <td>
-          <button onClick={handleNewElement}>New Element</button>
-        </td>
-      </tr>
+      {value.length < maxItems && (
+        <tr>
+          <td></td>
+          <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
+          <td>
+            <button onClick={handleNewElement}>New Element</button>
+          </td>
+        </tr>
+      )}
     </>
   )
 }

@@ -1,7 +1,8 @@
 {
     "editor.tabSize": 2,
     "cSpell.words": [
-        "Paranjpe"
+        "Paranjpe",
+        "acai"
     ],
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove"

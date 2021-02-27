@@ -1,17 +1,13 @@
 import Container from './Container'
-import booleanInput from './inputs/boolean'
-import numberInput from './inputs/number'
-import stringInput from './inputs/string'
 import InputSelector from './InputSelector'
 import { BaseProps } from './props'
 import InputChooser from './InputChooser'
 import Validation from './Validation'
 import Row from './Row'
-import nullInput from './inputs/null'
-import arrayInput from './inputs/array'
 import ValidationNoErrors from './ValidationNoErrors'
 import ValidationErrors from './ValidationErrors'
 import InputName from './InputName'
+import defaultInputs from './defaultInputs'
 
 const defaultProps: BaseProps = {
   Container: Container,
@@ -23,7 +19,7 @@ const defaultProps: BaseProps = {
   Row: Row,
   InputName: InputName,
   schema: {},
-  inputs: [stringInput, numberInput, booleanInput, nullInput, arrayInput],
+  inputs: defaultInputs,
   readOnly: false,
   disabled: false
 }

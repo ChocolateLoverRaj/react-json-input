@@ -1,6 +1,7 @@
 import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
 import { FunctionComponent, ReactNode } from 'react'
+import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
 
@@ -131,6 +132,7 @@ export interface BaseProps {
   inputs: Array<Input<any, any>>
   readOnly: boolean
   disabled: boolean
+  nameStyle: NameStyle
 }
 
 export interface DefaultValueProps<T> {

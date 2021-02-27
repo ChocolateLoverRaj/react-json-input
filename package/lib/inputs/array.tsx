@@ -1,6 +1,7 @@
 import { JSONSchema7 } from 'json-schema'
 import React, { MouseEventHandler } from 'react'
 import DeleteButton from '../deleteButton'
+import getElementName from '../getElementName'
 import getSelectedInput from '../getSelectedInput'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
@@ -19,7 +20,14 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     errors
   } = props
   const { items } = schema
-  const { InputChooser, inputs, ValidationNoErrors, ValidationErrors, InputName } = rootProps
+  const {
+    InputChooser,
+    inputs,
+    ValidationNoErrors,
+    ValidationErrors,
+    InputName,
+    nameStyle
+  } = rootProps
 
   if (items instanceof Array) {
     throw new Error('Tuples not supported yet')
@@ -37,6 +45,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
   const arrayErrorMessage = errors !== undefined &&
     `Error with elements ${errors.map(({ dataPath }) => dataPath.split('/', 2)[1]).toString()}`
+
+  console.log(name, getElementName(name, 0, nameStyle))
 
   return (
     <>
@@ -74,7 +84,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           <InputChooser
             key={`${i} ${selectedInput.name}`}
             rootProps={rootProps}
-            name={`${name}[${i}]`}
+            name={getElementName(name, i, nameStyle)}
             schema={itemSchema}
             value={element}
             onChange={handleChange}
@@ -87,7 +97,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       })}
       <tr>
         <td></td>
-        <InputName rootProps={rootProps} name={`${name}[+]`} />
+        <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
         <td>
           <button onClick={handleNewElement}>New Element</button>
         </td>

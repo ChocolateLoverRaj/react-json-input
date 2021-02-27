@@ -21,7 +21,11 @@ const defaultProps: BaseProps = {
   schema: {},
   inputs: defaultInputs,
   readOnly: false,
-  disabled: false
+  disabled: false,
+  nameStyle: {
+    style: 'indent',
+    spaces: 4
+  }
 }
 
 export default defaultProps

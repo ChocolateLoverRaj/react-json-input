@@ -1,11 +1,12 @@
-import { JSONSchema7 } from 'json-schema'
 import React, { MouseEventHandler } from 'react'
+import arraySchema from '../arraySchema'
 import DeleteButton from '../deleteButton'
 import getElementName from '../getElementName'
 import getSelectedInput from '../getSelectedInput'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
 import valueFromSchema from '../valueFromSchema'
+import definitionToSchema from '../definitionToSchema'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
   const {
@@ -20,7 +21,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onDelete,
     errors
   } = props
-  const { items } = schema
+  const { additionalItems, items } = schema
   const {
     InputChooser,
     inputs,
@@ -30,20 +31,26 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     nameStyle
   } = rootProps
 
-  if (items instanceof Array) {
-    throw new Error('Tuples not supported yet')
-  } else if (typeof items === 'boolean') {
-    throw new Error('Unknown items type')
-  }
-
-  const itemSchema: JSONSchema7 = items ?? {}
+  const itemSchemas = arraySchema(schema)
   const minItems = schema.minItems ?? 0
   const maxItems = schema.maxItems ?? Infinity
+  const newItemSchema = items instanceof Array
+    ? value.length < items.length
+      ? itemSchemas[value.length]
+      : definitionToSchema(additionalItems)
+    : definitionToSchema(items)
+  const canAddNewItem = (
+    value.length < maxItems &&
+    (
+      (items instanceof Array && value.length < items.length) ||
+      additionalItems !== false
+    )
+  )
 
   const handleNewElement: MouseEventHandler<HTMLButtonElement> = () => {
-    const input = getValidInput(inputs, itemSchema)
-    onChange([...value, input.to(undefined, itemSchema, inputs)])
-    onInputDataChange([...inputData, getSelectedInput(input, itemSchema, inputs)])
+    const input = getValidInput(inputs, newItemSchema)
+    onChange([...value, input.to(undefined, newItemSchema, inputs)])
+    onInputDataChange([...inputData, getSelectedInput(input, newItemSchema, inputs)])
   }
 
   const arrayErrorMessage = errors !== undefined &&
@@ -58,12 +65,13 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
             : <ValidationErrors rootProps={rootProps} message={arrayErrorMessage} />}
         </td>
         <InputName rootProps={rootProps} name={name} />
-        <td>{children}</td>
         <td />
+        <td>{children}</td>
         <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
       </tr>
       {value.map((element, i) => {
         const selectedInput = inputData[i]
+        const itemSchema = i < itemSchemas.length ? itemSchemas[i] : newItemSchema
         const elementErrors = errors
           ?.filter(error => error.dataPath.startsWith(`/${i}`))
           .map(error => ({ ...error, dataPath: error.dataPath.slice(`/${i}`.length) }))
@@ -74,8 +82,40 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
         const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = value.length > minItems
           ? () => {
-            onChange([...value.slice(0, i), ...value.slice(i + 1)])
-            onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])
+            if (items instanceof Array) {
+              const valueMap = (value: any, j: number): any => {
+                const itemSchema = itemSchemas[i + j]
+                const input = getValidInput(inputs, itemSchema)
+                return input.to(value, itemSchema, inputs)
+              }
+              const inputDataMap = (inputData: SelectedInput<any>, j: number): SelectedInput<any> => {
+                const itemSchema = itemSchemas[i + j]
+                const input = getValidInput(inputs, itemSchema)
+                console.log(inputData, {
+                  name: input.name,
+                  data: input.getInitialInputData(itemSchema, inputs)
+                })
+                return {
+                  name: input.name,
+                  data: input.getInitialInputData(itemSchema, inputs)
+                }
+              }
+              const shiftEnd = items.length + 1
+              console.log(shiftEnd)
+              onChange([
+                ...value.slice(0, i),
+                ...value.slice(i + 1, shiftEnd).map(valueMap),
+                ...value.slice(shiftEnd)
+              ])
+              onInputDataChange([
+                ...inputData.slice(0, i),
+                ...inputData.slice(i + 1, shiftEnd).map(inputDataMap),
+                ...inputData.slice(shiftEnd)
+              ])
+            } else {
+              onChange([...value.slice(0, i), ...value.slice(i + 1)])
+              onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])
+            }
           }
           : undefined
 
@@ -98,7 +138,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           />
         )
       })}
-      {value.length < maxItems && (
+      {canAddNewItem && (
         <tr>
           <td></td>
           <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
@@ -116,31 +156,10 @@ const arrayInput: Input<any[], Array<SelectedInput<any>>> = {
   Component: ArrayInputComponent,
   isType: value => value instanceof Array,
   isValid: schema => schema.type === undefined || schema.type === 'array',
-  to: (value, schema, inputs) => {
-    const { items } = schema
-    if (typeof items === 'boolean' || items instanceof Array) {
-      throw new Error('Tuples or booleans not supported')
-    }
-    const itemSchema: JSONSchema7 = items ?? {}
-    const arr: any[] = []
-    for (let i = 0; i < (schema.minItems ?? 0); i++) {
-      arr.push(valueFromSchema(inputs, itemSchema))
-    }
-    return arr
-  },
-  getInitialInputData: (schema, inputs) => {
-    const { items } = schema
-    if (typeof items === 'boolean' || items instanceof Array) {
-      throw new Error('Tuples or booleans not supported')
-    }
-    const itemSchema: JSONSchema7 = items ?? {}
-    const arr: Array<SelectedInput<any>> = []
-    for (let i = 0; i < (schema.minItems ?? 0); i++) {
-      const input = getValidInput(inputs, itemSchema)
-      arr.push(getSelectedInput(input, itemSchema, inputs))
-    }
-    return arr
-  }
+  to: (value, schema, inputs) => arraySchema(schema)
+    .map((itemSchema, i) => valueFromSchema(value?.[i], inputs, itemSchema)),
+  getInitialInputData: (schema, inputs) => arraySchema(schema)
+    .map(itemSchema => getSelectedInput(getValidInput(inputs, itemSchema), itemSchema, inputs))
 }
 
 export default arrayInput

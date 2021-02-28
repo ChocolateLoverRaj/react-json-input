@@ -8,12 +8,20 @@ import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
   type: 'array',
-  minItems: 3,
-  maxItems: 5
+  items: [
+    { type: 'string' },
+    { type: 'number' },
+    { type: 'boolean' },
+    { type: 'null' },
+    { type: 'array' },
+    { type: 'array' }
+  ],
+  minItems: 2,
+  additionalItems: true
 }
 
 const App: FC = () => {
-  const [value, setValue] = useState(valueFromSchema(defaultInputs, schema))
+  const [value, setValue] = useState(valueFromSchema(undefined, defaultInputs, schema))
 
   return (
     <>

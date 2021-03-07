@@ -9,7 +9,7 @@ import defaultInputs from '../package/lib/defaultInputs'
 const schema: JSONSchema7 = {
   type: 'array',
   items: [{
-    enum: ['a', 24, false, null]
+    const: 24
   }, {
     enum: ['b', 24, true]
   }]

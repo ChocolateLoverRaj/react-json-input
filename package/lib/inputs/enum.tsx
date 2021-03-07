@@ -3,16 +3,11 @@ import { Input, InputComponent } from '../props'
 import rowProps from '../rowProps'
 import React, { ChangeEventHandler, useCallback } from 'react'
 import { JSONSchema7 } from 'json-schema'
-import { AssertionError } from 'assert'
+import isEnum from '../isEnum'
 
 type EnumType = string | number | null | boolean
 
-const getOptions = (schema: JSONSchema7): EnumType[] => {
-  if (!(schema.enum instanceof Array)) {
-    throw new AssertionError({ message: 'No valid enum' })
-  }
-  return schema.enum as EnumType[]
-}
+const getOptions = (schema: JSONSchema7): EnumType[] => schema.enum as EnumType[] ?? [schema.const]
 
 const EnumInputComponent: InputComponent<EnumType> = props => {
   const { value, onChange, rootProps, schema } = props
@@ -44,7 +39,7 @@ const enumInput: Input<EnumType, undefined> = {
   name: 'enum',
   Component: EnumInputComponent,
   isType: value => ['string', 'number', 'null', 'boolean'].includes(typeof value),
-  isValid: schema => schema.enum !== undefined,
+  isValid: schema => isEnum(schema),
   to: (value, state, schema) => {
     const options = getOptions(schema)
     return {

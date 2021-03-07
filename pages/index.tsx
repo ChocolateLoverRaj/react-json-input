@@ -8,16 +8,11 @@ import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
   type: 'array',
-  items: [
-    { type: 'string' },
-    { type: 'number' },
-    { type: 'boolean' },
-    { type: 'null' },
-    { type: 'array' },
-    { type: 'array' }
-  ],
-  minItems: 2,
-  additionalItems: true
+  items: [{
+    enum: ['a', 24, false, null]
+  }, {
+    enum: ['b', 24, true]
+  }]
 }
 
 const App: FC = () => {

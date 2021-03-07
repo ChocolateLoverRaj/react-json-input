@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, useCallback } from 'react'
+import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
 import rowProps from '../rowProps'
 
@@ -26,7 +27,7 @@ const BooleanInputComponent: InputComponent<boolean> = props => {
 const booleanInput: Input<boolean, undefined> = {
   name: 'boolean',
   Component: BooleanInputComponent,
-  isValid: schema => schema.type === undefined || schema.type === 'boolean',
+  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'boolean'),
   isType: value => typeof value === 'boolean',
   to: value => ({
     value: Boolean(value),

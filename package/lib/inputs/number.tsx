@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Input, InputComponent } from '../props'
 import InputNumber from 'rc-input-number'
 import rowProps from '../rowProps'
+import isEnum from '../isEnum'
 
 const NumberInputComponent: InputComponent<number> = props => {
   const { value, onChange, rootProps } = props
@@ -25,7 +26,7 @@ const NumberInputComponent: InputComponent<number> = props => {
 const numberInput: Input<number, undefined> = {
   name: 'number',
   Component: NumberInputComponent,
-  isValid: schema => schema.type === undefined || schema.type === 'number',
+  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'number'),
   isType: value => typeof value === 'number',
   to: value => {
     const n = Number(value)

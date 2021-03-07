@@ -1,4 +1,5 @@
 import React from 'react'
+import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
 import rowProps from '../rowProps'
 
@@ -14,7 +15,7 @@ const nullInput: Input<null, undefined> = {
   name: 'null',
   Component: NullInputComponent,
   isType: value => value === null,
-  isValid: schema => schema.type === undefined || schema.type === 'null',
+  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'null'),
   to: () => ({
     value: null,
     state: undefined

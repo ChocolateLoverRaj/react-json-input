@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, useCallback } from 'react'
+import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
 import rowProps from '../rowProps'
 
@@ -25,7 +26,7 @@ const StringInputComponent: InputComponent<string> = props => {
 const stringInput: Input<string, undefined> = {
   name: 'string',
   Component: StringInputComponent,
-  isValid: schema => schema.type === undefined || schema.type === 'string',
+  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'string'),
   isType: value => typeof value === 'string',
   to: value => ({
     value: String(value),

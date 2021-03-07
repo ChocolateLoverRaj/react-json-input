@@ -5,6 +5,7 @@ import getElementName from '../getElementName'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
 import definitionToSchema from '../definitionToSchema'
+import isEnum from '../isEnum'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
   const {
@@ -160,7 +161,7 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   name: 'array',
   Component: ArrayInputComponent,
   isType: value => value instanceof Array,
-  isValid: schema => schema.type === undefined || schema.type === 'array',
+  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'array'),
   to: (value, state, schema, inputs) => {
     const { items, minItems, maxItems, additionalItems } = schema
     const additionalItemSchema = definitionToSchema(additionalItems)

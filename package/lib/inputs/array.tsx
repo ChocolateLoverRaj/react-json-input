@@ -106,17 +106,17 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
                   state: newState
                 })
               }
+              const notShiftedIndex = Math.max(shiftEnd + 1, i + 1)
               onChange([
                 ...value.slice(0, i),
                 ...shiftedValues,
-                ...value.slice(shiftEnd + 1)
+                ...value.slice(notShiftedIndex)
               ])
               onInputDataChange([
                 ...inputData.slice(0, i),
                 ...shiftedSelectedInputs,
-                ...inputData.slice(shiftEnd + 1)
+                ...inputData.slice(notShiftedIndex)
               ])
-              console.log(inputData.slice(shiftEnd), shiftEnd)
             } else {
               onChange([...value.slice(0, i), ...value.slice(i + 1)])
               onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])

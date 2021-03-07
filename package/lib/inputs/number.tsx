@@ -22,14 +22,17 @@ const NumberInputComponent: InputComponent<number> = props => {
   )
 }
 
-const numberInput: Input = {
+const numberInput: Input<number, undefined> = {
   name: 'number',
   Component: NumberInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'number',
   isType: value => typeof value === 'number',
   to: value => {
     const n = Number(value)
-    return !Number.isNaN(n) ? n : 0
+    return {
+      value: !Number.isNaN(n) ? n : 0,
+      state: undefined
+    }
   }
 }
 

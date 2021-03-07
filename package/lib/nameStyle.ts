@@ -1,9 +1,9 @@
-export interface IndentStyle {
+interface IndentStyle {
   style: 'indent'
   spaces: number
 }
 
-export interface PathStyle {
+interface PathStyle {
   style: 'path'
 }
 

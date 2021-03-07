@@ -5,7 +5,7 @@ import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
 
-export interface ContainerProps {
+interface ContainerProps {
   rootProps: ControlledProps<any>
   errors?: ErrorObject[]
   selectedInput: SelectedInput
@@ -14,9 +14,9 @@ export interface ContainerProps {
 
 export type ContainerComponent = FunctionComponent<ContainerProps>
 
-export type IsValid = (schema: JSONSchema7) => boolean
+type IsValid = (schema: JSONSchema7) => boolean
 
-export type IsType = (value: any) => boolean
+type IsType = (value: any) => boolean
 
 export type OnInputStateChange<T> = (newInputData: T) => void
 
@@ -35,7 +35,7 @@ export interface InputProps<Value, State> {
 
 export type InputComponent<Value = any, InputData = undefined> = FunctionComponent<InputProps<Value, InputData>>
 
-export interface Initial<Value = any, State = any> {
+interface Initial<Value = any, State = any> {
   value: Value
   state: State
 }
@@ -57,7 +57,7 @@ export interface SelectedInput<Value = any, State = any> {
 
 export type OnSelectedInputChange<Value = any, State = any> = (newSelectedInput: SelectedInput<Value, State>) => void
 
-export interface InputChooserProps {
+interface InputChooserProps {
   rootProps: ControlledProps<any>
   schema: JSONSchema7
   name: string
@@ -73,7 +73,7 @@ export type InputChooserComponent = FunctionComponent<InputChooserProps>
 
 export type InputSelectorPropsOnchange = (newInput: Input) => void
 
-export interface InputSelectorProps {
+interface InputSelectorProps {
   rootProps: ControlledProps<any>
   inputs: Input[]
   value: Input
@@ -82,7 +82,7 @@ export interface InputSelectorProps {
 
 export type InputSelectorComponent = FunctionComponent<InputSelectorProps>
 
-export interface ValidationProps {
+interface ValidationProps {
   rootProps: ControlledProps<any>
   errors?: ErrorObject[]
 }
@@ -99,25 +99,25 @@ export interface RowPropsWithoutChildren {
   onDelete?: RowPropsWithoutChildrenOnDelete
 }
 
-export interface RowProps extends RowPropsWithoutChildren {
+interface RowProps extends RowPropsWithoutChildren {
   children: ReactNode
 }
 
 export type RowComponent = FunctionComponent<RowProps>
 
-export interface PropsWithRootProps {
+interface PropsWithRootProps {
   rootProps: ControlledProps<any>
 }
 
 export type ValidationNoErrorsComponent = FunctionComponent<PropsWithRootProps>
 
-export interface ValidationErrorsProps extends PropsWithRootProps {
+interface ValidationErrorsProps extends PropsWithRootProps {
   message: string
 }
 
 export type ValidationErrorsComponent = FunctionComponent<ValidationErrorsProps>
 
-export interface InputNameProps extends PropsWithRootProps {
+interface InputNameProps extends PropsWithRootProps {
   name: string
 }
 
@@ -139,17 +139,17 @@ export interface BaseProps {
   nameStyle: NameStyle
 }
 
-export interface DefaultValueProps<T> {
+interface DefaultValueProps<T> {
   defaultValue: T
 }
 
-export interface ControlProps<T> {
+interface ControlProps<T> {
   value: T
   onChange: OnChange<T>
 }
 
-export type UncontrolledProps<T> = BaseProps & Partial<ControlProps<T>> & Partial<DefaultValueProps<T>>
+type UncontrolledProps<T> = BaseProps & Partial<ControlProps<T>> & Partial<DefaultValueProps<T>>
 
-export type ControlledProps<T> = BaseProps & ControlProps<T> & Partial<DefaultValueProps<T>>
+type ControlledProps<T> = BaseProps & ControlProps<T> & Partial<DefaultValueProps<T>>
 
 export type Props<T> = UncontrolledProps<T> | ControlledProps<T>

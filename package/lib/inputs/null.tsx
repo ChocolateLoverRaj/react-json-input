@@ -15,8 +15,10 @@ const nullInput: Input<null, undefined> = {
   Component: NullInputComponent,
   isType: value => value === null,
   isValid: schema => schema.type === undefined || schema.type === 'null',
-  to: () => null,
-  getInitialInputData: () => undefined
+  to: () => ({
+    value: null,
+    state: undefined
+  })
 }
 
 export default nullInput

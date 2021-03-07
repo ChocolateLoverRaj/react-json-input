@@ -28,8 +28,10 @@ const booleanInput: Input<boolean, undefined> = {
   Component: BooleanInputComponent,
   isValid: schema => schema.type === undefined || schema.type === 'boolean',
   isType: value => typeof value === 'boolean',
-  to: Boolean,
-  getInitialInputData: () => undefined
+  to: value => ({
+    value: Boolean(value),
+    state: undefined
+  })
 }
 
 export default booleanInput

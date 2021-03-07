@@ -28,7 +28,7 @@ const App: FC = () => {
       <h1>Json Input</h1>
       <JsonInput schema={schema} value={value} onChange={setValue} />
       <h2>Pretty Printed Json</h2>
-      <JsonPretty data={value} />
+      <JsonPretty json={value} />
     </>
   )
 }

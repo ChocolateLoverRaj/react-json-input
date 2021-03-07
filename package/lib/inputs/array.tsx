@@ -2,10 +2,8 @@ import React, { MouseEventHandler } from 'react'
 import arraySchema from '../arraySchema'
 import DeleteButton from '../deleteButton'
 import getElementName from '../getElementName'
-import getSelectedInput from '../getSelectedInput'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
-import valueFromSchema from '../valueFromSchema'
 import definitionToSchema from '../definitionToSchema'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
@@ -16,8 +14,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     children,
     value,
     onChange,
-    inputData,
-    onInputDataChange,
+    inputState: inputData,
+    onInputStateChange: onInputDataChange,
     onDelete,
     errors
   } = props
@@ -49,8 +47,12 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
   const handleNewElement: MouseEventHandler<HTMLButtonElement> = () => {
     const input = getValidInput(inputs, newItemSchema)
-    onChange([...value, input.to(undefined, newItemSchema, inputs)])
-    onInputDataChange([...inputData, getSelectedInput(input, newItemSchema, inputs)])
+    const {
+      value: newElementValue,
+      state
+    } = input.to(undefined, undefined, newItemSchema, inputs)
+    onChange([...value, newElementValue])
+    onInputDataChange([...inputData, { input, state }])
   }
 
   const arrayErrorMessage = errors !== undefined &&
@@ -83,35 +85,38 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
         const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = value.length > minItems
           ? () => {
             if (items instanceof Array) {
-              const valueMap = (value: any, j: number): any => {
-                const itemSchema = itemSchemas[i + j]
-                const input = getValidInput(inputs, itemSchema)
-                return input.to(value, itemSchema, inputs)
-              }
-              const inputDataMap = (inputData: SelectedInput<any>, j: number): SelectedInput<any> => {
-                const itemSchema = itemSchemas[i + j]
-                const input = getValidInput(inputs, itemSchema)
-                console.log(inputData, {
-                  name: input.name,
-                  data: input.getInitialInputData(itemSchema, inputs)
-                })
-                return {
-                  name: input.name,
-                  data: input.getInitialInputData(itemSchema, inputs)
-                }
-              }
               const shiftEnd = items.length + 1
-              console.log(shiftEnd)
+              const shiftedValues: any[] = []
+              const shiftedSelectedInputs: SelectedInput[] = []
+              for (let j = i; j < Math.min(shiftEnd, value.length - 1); j++) {
+                // Grab schema from current element
+                const itemSchema = itemSchemas[j]
+                // Grab value from next element
+                const itemValue = value[j + 1]
+                console.log(inputData, j)
+                // Grab input and state from current element
+                const { input, state } = inputData[j]
+                const {
+                  value: newValue,
+                  state: newState
+                } = input.to(itemValue, state, itemSchema, inputs)
+                shiftedValues.push(newValue)
+                shiftedSelectedInputs.push({
+                  input: input,
+                  state: newState
+                })
+              }
               onChange([
                 ...value.slice(0, i),
-                ...value.slice(i + 1, shiftEnd).map(valueMap),
-                ...value.slice(shiftEnd)
+                ...shiftedValues,
+                ...value.slice(shiftEnd + 1)
               ])
               onInputDataChange([
                 ...inputData.slice(0, i),
-                ...inputData.slice(i + 1, shiftEnd).map(inputDataMap),
-                ...inputData.slice(shiftEnd)
+                ...shiftedSelectedInputs,
+                ...inputData.slice(shiftEnd + 1)
               ])
+              console.log(inputData.slice(shiftEnd), shiftEnd)
             } else {
               onChange([...value.slice(0, i), ...value.slice(i + 1)])
               onInputDataChange([...inputData.slice(0, i), ...inputData.slice(i + 1)])
@@ -151,15 +156,39 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
   )
 }
 
-const arrayInput: Input<any[], Array<SelectedInput<any>>> = {
+const arrayInput: Input<any[], SelectedInput[]> = {
   name: 'array',
   Component: ArrayInputComponent,
   isType: value => value instanceof Array,
   isValid: schema => schema.type === undefined || schema.type === 'array',
-  to: (value, schema, inputs) => arraySchema(schema)
-    .map((itemSchema, i) => valueFromSchema(value?.[i], inputs, itemSchema)),
-  getInitialInputData: (schema, inputs) => arraySchema(schema)
-    .map(itemSchema => getSelectedInput(getValidInput(inputs, itemSchema), itemSchema, inputs))
+  to: (value, state, schema, inputs) => {
+    const { items, minItems, maxItems, additionalItems } = schema
+    const additionalItemSchema = definitionToSchema(additionalItems)
+    const itemSchemas = arraySchema(schema)
+    const newValue: any[] = []
+    const newState: SelectedInput[] = []
+    const maxLength = items instanceof Array
+      ? minItems ?? items.length
+      : value instanceof Array
+        ? Math.min(value.length, maxItems ?? Infinity)
+        : minItems ?? 0
+    for (let i = 0; i < maxLength; i++) {
+      const itemSchema = i < itemSchemas.length ? itemSchemas[i] : additionalItemSchema
+      const itemValue = value?.[i]
+      const itemState = state?.[i]
+      const input = getValidInput(inputs, itemSchema)
+      const {
+        value: newItemValue,
+        state: newItemState
+      } = input.to(itemValue, itemState, itemSchema, inputs)
+      newValue.push(newItemValue)
+      newState.push({ input: input, state: newItemState })
+    }
+    return {
+      value: newValue,
+      state: newState
+    }
+  }
 }
 
 export default arrayInput

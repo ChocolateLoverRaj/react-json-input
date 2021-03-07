@@ -1,7 +1,7 @@
 import React from 'react'
 import { ContainerComponent } from './props'
 
-const Container: ContainerComponent<any> = props => {
+const Container: ContainerComponent = props => {
   const { rootProps, errors, selectedInput, onSelectedInputChange } = props
   const { schema, InputChooser, value, onChange } = rootProps
 

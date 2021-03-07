@@ -5,22 +5,22 @@ import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
 
-export interface ContainerProps<T> {
+export interface ContainerProps {
   rootProps: ControlledProps<any>
   errors?: ErrorObject[]
-  selectedInput: SelectedInput<T>
-  onSelectedInputChange: OnSelectedInputChange<T>
+  selectedInput: SelectedInput
+  onSelectedInputChange: OnSelectedInputChange
 }
 
-export type ContainerComponent<T> = FunctionComponent<ContainerProps<T>>
+export type ContainerComponent = FunctionComponent<ContainerProps>
 
 export type IsValid = (schema: JSONSchema7) => boolean
 
 export type IsType = (value: any) => boolean
 
-export type OnInputDataChange<T> = (newInputData: T) => void
+export type OnInputStateChange<T> = (newInputData: T) => void
 
-export interface InputProps<Value, InputData> {
+export interface InputProps<Value, State> {
   rootProps: ControlledProps<any>
   value: Value
   onChange: (neValue: Value) => void
@@ -29,29 +29,33 @@ export interface InputProps<Value, InputData> {
   errors?: ErrorObject[]
   name: string
   onDelete?: () => void
-  inputData: InputData
-  onInputDataChange: OnInputDataChange<InputData>
+  inputState: State
+  onInputStateChange: OnInputStateChange<State>
 }
 
 export type InputComponent<Value = any, InputData = undefined> = FunctionComponent<InputProps<Value, InputData>>
 
-export interface Input<Value = any, InputData = undefined> {
+export interface Initial<Value = any, State = any> {
+  value: Value
+  state: State
+}
+
+export interface Input<Value = any, State = any> {
   name: string
   isValid: IsValid
   isType: IsType
-  to: (value: any, schema: JSONSchema7, inputs: Array<Input<any, any>>) => Value
-  Component: InputComponent<Value, InputData>
-  getInitialInputData: (schema: JSONSchema7, inputs: Array<Input<any, any>>) => InputData
+  to: (value: any, state: State, schema: JSONSchema7, inputs: Array<Input<any, any>>) => Initial<Value, State>
+  Component: InputComponent<Value, State>
 }
 
 export type ControlledPropsOnChange = (newValue: any) => void
 
-export interface SelectedInput<T> {
-  name: string
-  data: T
+export interface SelectedInput<Value = any, State = any> {
+  input: Input<Value, State>
+  state: State
 }
 
-export type OnSelectedInputChange<T> = (newSelectedInput: SelectedInput<T>) => void
+export type OnSelectedInputChange<Value = any, State = any> = (newSelectedInput: SelectedInput<Value, State>) => void
 
 export interface InputChooserProps {
   rootProps: ControlledProps<any>
@@ -61,18 +65,18 @@ export interface InputChooserProps {
   onChange: ControlledPropsOnChange
   errors?: ErrorObject[]
   onDelete?: RowPropsWithoutChildrenOnDelete
-  selectedInput: SelectedInput<any>
-  onSelectedInputChange: OnSelectedInputChange<any>
+  selectedInput: SelectedInput<any, any>
+  onSelectedInputChange: OnSelectedInputChange<any, any>
 }
 
 export type InputChooserComponent = FunctionComponent<InputChooserProps>
 
-export type InputSelectorPropsOnchange = (newValue: string) => void
+export type InputSelectorPropsOnchange = (newInput: Input) => void
 
 export interface InputSelectorProps {
   rootProps: ControlledProps<any>
   inputs: Input[]
-  value: string
+  value: Input
   onChange: InputSelectorPropsOnchange
 }
 
@@ -120,7 +124,7 @@ export interface InputNameProps extends PropsWithRootProps {
 export type InputNameComponent = FunctionComponent<InputNameProps>
 
 export interface BaseProps {
-  Container: ContainerComponent<any>
+  Container: ContainerComponent
   InputChooser: InputChooserComponent
   InputSelector: InputSelectorComponent
   Validation: ValidationComponent

@@ -29,9 +29,11 @@ const numberInput: Input<number, undefined> = {
   isType: value => typeof value === 'number',
   to: value => {
     const n = Number(value)
-    return !Number.isNaN(n) ? n : 0
-  },
-  getInitialInputData: () => undefined
+    return {
+      value: !Number.isNaN(n) ? n : 0,
+      state: undefined
+    }
+  }
 }
 
 export default numberInput

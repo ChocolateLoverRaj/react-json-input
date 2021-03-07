@@ -1,6 +1,5 @@
-import never from 'never'
 import React, { useCallback } from 'react'
-import { InputChooserComponent, InputSelectorPropsOnchange, OnInputDataChange } from './props'
+import { InputChooserComponent, InputSelectorPropsOnchange, OnInputStateChange } from './props'
 
 const InputChooser: InputChooserComponent = props => {
   const {
@@ -15,27 +14,23 @@ const InputChooser: InputChooserComponent = props => {
     onSelectedInputChange
   } = props
   const { InputSelector, inputs } = rootProps
-  const { name: selectedInputName, data: selectedInputData } = selectedInput
+  const { input, state } = selectedInput
+  const { Component } = input
 
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
 
-  const handleInputChange = useCallback<InputSelectorPropsOnchange>(name => {
-    const {
-      getInitialInputData,
-      to
-    } = filteredInputs.find(({ name: currentName }) => currentName === name) ?? never('No input with that name')
+  const handleInputChange = useCallback<InputSelectorPropsOnchange>(input => {
+    const { value: newValue, state: newState } = input.to(value, state, schema, inputs)
     onSelectedInputChange({
-      name: name,
-      data: getInitialInputData(schema, inputs)
+      input: input,
+      state: newState
     })
-    onChange(to(value, schema, inputs))
-  }, [filteredInputs, onSelectedInputChange, value, onChange, schema, inputs])
+    onChange(newValue)
+  }, [value, state, schema, inputs, onSelectedInputChange, onChange])
 
-  const handleInputDataChange = useCallback<OnInputDataChange<any>>(data => {
-    onSelectedInputChange({ ...selectedInput, data })
+  const handleInputStateChange = useCallback<OnInputStateChange<any>>(data => {
+    onSelectedInputChange({ ...selectedInput, state: data })
   }, [onSelectedInputChange, selectedInput])
-
-  const { Component } = filteredInputs.find(({ name }) => name === selectedInputName) ?? never('No selected input with that name')
 
   return (
     <Component
@@ -46,12 +41,12 @@ const InputChooser: InputChooserComponent = props => {
       errors={errors}
       name={name}
       onDelete={onDelete}
-      inputData={selectedInputData}
-      onInputDataChange={handleInputDataChange}
+      inputState={state}
+      onInputStateChange={handleInputStateChange}
     >
       <InputSelector
         rootProps={rootProps}
-        value={selectedInputName}
+        value={input}
         onChange={handleInputChange}
         inputs={filteredInputs}
       />

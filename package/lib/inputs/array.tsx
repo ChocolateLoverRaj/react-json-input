@@ -94,7 +94,6 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
                 const itemSchema = itemSchemas[j]
                 // Grab value from next element
                 const itemValue = value[j + 1]
-                console.log(inputData, j)
                 // Grab input and state from current element
                 const { input, state } = inputData[j]
                 const {

@@ -7,18 +7,21 @@ import valueFromSchema from '../package/lib/valueFromSchema'
 import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
-  type: 'object',
-  properties: {
-    x: {
-      type: 'number',
-      minimum: 4
+  type: 'array',
+  items: [{
+    type: 'object',
+    properties: {
+      a: true,
+      b: true
     },
-    y: {
-      type: 'string',
-      pattern: 'a'
+    required: ['a']
+  }, {
+    type: 'object',
+    properties: {
+      b: true,
+      c: true
     }
-  },
-  required: ['y']
+  }]
 }
 
 const App: FC = () => {
@@ -26,7 +29,8 @@ const App: FC = () => {
 
   return (
     <>
-      <h1>Json Input</h1>
+      <h1>React Json Input</h1>
+      <h2>Json Input</h2>
       <JsonInput schema={schema} value={value} onChange={setValue} />
       <h2>Pretty Printed Json</h2>
       <JsonPretty json={value} />

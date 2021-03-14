@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "declaration": true,
     "strictNullChecks": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "downlevelIteration": true
   },
   "include": [
     "**/*.ts",

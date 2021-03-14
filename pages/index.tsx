@@ -7,12 +7,15 @@ import valueFromSchema from '../package/lib/valueFromSchema'
 import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
-  type: 'array',
-  items: [{
-    const: 24
-  }, {
-    enum: ['b', 24, true]
-  }]
+  type: 'object',
+  properties: {
+    x: {
+      type: 'number'
+    },
+    y: {
+      type: 'number'
+    }
+  }
 }
 
 const App: FC = () => {

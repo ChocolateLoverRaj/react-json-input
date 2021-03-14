@@ -1,11 +1,12 @@
 import { JSONSchema7Definition } from 'json-schema'
+import never from 'never'
 import React, { ChangeEventHandler } from 'react'
 import definitionToSchema from '../definitionToSchema'
 import DeleteButton from '../deleteButton'
-import getElementName from '../getElementName'
+import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import isEnum from '../isEnum'
-import { Input, InputComponent, SelectedInput } from '../props'
+import { ControlledPropsOnChange, Input, InputComponent, OnSelectedInputChange, RowPropsWithoutChildrenOnDelete, SelectedInput } from '../props'
 
 type ObjectInputData = Map<string, SelectedInput>
 
@@ -21,8 +22,15 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     inputState,
     onInputStateChange
   } = props
-  const { ValidationNoErrors, InputName, nameStyle, inputs } = rootProps
+  const {
+    ValidationNoErrors,
+    InputName,
+    nameStyle,
+    inputs,
+    InputChooser
+  } = rootProps
 
+  const required = schema.required ?? []
   const properties = schema.properties ?? {}
   const addableProperties = Object.keys(properties).filter(key => value[key] === undefined)
 
@@ -40,7 +48,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     })
     onInputStateChange(new Map([
       ...inputState,
-      [key, state]
+      [key, { input, state }]
     ]))
   }
 
@@ -53,10 +61,49 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
         <td>{children}</td>
         <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
       </tr>
+      {Object.entries(value).map(([key, definition]) => {
+        const itemSchema = definitionToSchema(definition)
+
+        const handleChange: ControlledPropsOnChange = newValue => {
+          onChange({
+            ...value,
+            [key]: newValue
+          })
+        }
+
+        const handleSelectedInputChange: OnSelectedInputChange = newSelectedInput => {
+          onInputStateChange(new Map([
+            ...inputState,
+            [key, newSelectedInput]
+          ]))
+        }
+
+        const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = !required.includes(key)
+          ? () => {
+            const filterFn = ([currentKey]: [string, ...unknown[]]): boolean => currentKey !== key
+            onChange(Object.fromEntries(Object.entries(value).filter(filterFn)))
+            onInputStateChange(new Map([...inputState].filter(filterFn)))
+          }
+          : undefined
+
+        return (
+          <InputChooser
+            key={key}
+            rootProps={rootProps}
+            name={getSubName(name, `.${key}`, nameStyle)}
+            schema={itemSchema}
+            value={value[key]}
+            onChange={handleChange}
+            selectedInput={inputState.get(key) ?? never(`No selected input for key: '${key}'`)}
+            onSelectedInputChange={handleSelectedInputChange}
+            onDelete={handleDelete}
+          />
+        )
+      })}
       {addableProperties.length > 0 && (
         <tr>
           <td />
-          <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
+          <InputName rootProps={rootProps} name={getSubName(name, '.+', nameStyle)} />
           <td>
             <select value='' onChange={handleNewKey}>
               <option value=''>New Key</option>
@@ -102,7 +149,7 @@ const objectInput: Input<object, ObjectInputData> = {
         state
       } = input.to(newValue[key], currentState, itemSchema, inputs)
       newValue[key] = value
-      newState.set(key, state)
+      newState.set(key, { input, state })
     }
 
     newState.forEach((currentState, key) => {

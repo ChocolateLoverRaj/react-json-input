@@ -15,7 +15,8 @@ const schema: JSONSchema7 = {
     y: {
       type: 'number'
     }
-  }
+  },
+  required: ['y']
 }
 
 const App: FC = () => {

@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react'
 import arraySchema from '../arraySchema'
 import DeleteButton from '../deleteButton'
-import getElementName from '../getElementName'
+import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
 import definitionToSchema from '../definitionToSchema'
@@ -133,7 +133,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           <InputChooser
             key={i}
             rootProps={rootProps}
-            name={getElementName(name, i, nameStyle)}
+            name={getSubName(name, `[${i}]`, nameStyle)}
             schema={itemSchema}
             value={element}
             onChange={handleChange}
@@ -147,7 +147,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       {canAddNewItem && (
         <tr>
           <td></td>
-          <InputName rootProps={rootProps} name={getElementName(name, '+', nameStyle)} />
+          <InputName rootProps={rootProps} name={getSubName(name, '[+]', nameStyle)} />
           <td>
             <button onClick={handleNewElement}>New Element</button>
           </td>

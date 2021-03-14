@@ -10,10 +10,12 @@ const schema: JSONSchema7 = {
   type: 'object',
   properties: {
     x: {
-      type: 'number'
+      type: 'number',
+      minimum: 4
     },
     y: {
-      type: 'number'
+      type: 'string',
+      pattern: 'a'
     }
   },
   required: ['y']

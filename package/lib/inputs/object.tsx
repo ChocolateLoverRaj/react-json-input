@@ -20,14 +20,16 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     value,
     onChange,
     inputState,
-    onInputStateChange
+    onInputStateChange,
+    errors
   } = props
   const {
     ValidationNoErrors,
     InputName,
     nameStyle,
     inputs,
-    InputChooser
+    InputChooser,
+    ValidationErrors
   } = rootProps
 
   const required = schema.required ?? []
@@ -52,17 +54,24 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     ]))
   }
 
+  const objectErrorMessage = errors !== undefined &&
+    `Error with entries: ${errors.map(({ dataPath }) => dataPath.split('/', 2)[1]).toString()}`
+
   return (
     <>
       <tr>
-        <td><ValidationNoErrors rootProps={rootProps} /></td>
+        <td>
+          {objectErrorMessage === false
+            ? <ValidationNoErrors rootProps={rootProps} />
+            : <ValidationErrors rootProps={rootProps} message={objectErrorMessage} />}
+        </td>
         <InputName rootProps={rootProps} name={name} />
         <td />
         <td>{children}</td>
         <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
       </tr>
-      {Object.entries(value).map(([key, definition]) => {
-        const itemSchema = definitionToSchema(definition)
+      {Object.keys(value).map(key => {
+        const itemSchema = definitionToSchema(properties[key])
 
         const handleChange: ControlledPropsOnChange = newValue => {
           onChange({
@@ -86,6 +95,10 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
           }
           : undefined
 
+        const entryErrors = errors
+          ?.filter(error => error.dataPath.startsWith(`/${key}`))
+          .map(error => ({ ...error, dataPath: error.dataPath.slice(`/${key}`.length) }))
+
         return (
           <InputChooser
             key={key}
@@ -97,6 +110,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
             selectedInput={inputState.get(key) ?? never(`No selected input for key: '${key}'`)}
             onSelectedInputChange={handleSelectedInputChange}
             onDelete={handleDelete}
+            errors={entryErrors}
           />
         )
       })}

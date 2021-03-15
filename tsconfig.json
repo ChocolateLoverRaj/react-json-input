@@ -18,7 +18,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strictNullChecks": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "downlevelIteration": true
   },
   "include": [
     "next-env.d.ts",

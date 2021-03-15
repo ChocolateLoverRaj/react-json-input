@@ -145,7 +145,7 @@ const objectInput: Input<object, ObjectInputData> = {
 
     const required = new Set(schema.required)
     const properties = schema.properties ?? {}
-    const newValue: object = objectInput.isType(value) ? value : {}
+    const newValue: object = objectInput.isType(value) ? { ...value } : {}
     const newState: ObjectInputData = state instanceof Map ? state : new Map()
 
     // Add or modify a key
@@ -164,7 +164,7 @@ const objectInput: Input<object, ObjectInputData> = {
       // Remove properties in newValue that are not in schema
       // We are using an object with dynamic keys because we are editing a json object
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      if (typeof key !== 'string' || properties[key] === undefined) delete newValue[key]
+      if (properties[key] === undefined) delete newValue[key]
       else {
         const itemDefinition = properties[key]
         // Remove properties not in schema or are invalid

@@ -151,7 +151,7 @@ const objectInput: Input<object, ObjectInputData> = {
     // Add or modify a key
     const modifyKey = (key: string, itemDefinition: JSONSchema7Definition): void => {
       const itemSchema = definitionToSchema(itemDefinition)
-      const input = getValidInput(inputs, itemSchema)
+      const input = getValidInput(inputs, itemSchema, newValue[key])
       const {
         value,
         state

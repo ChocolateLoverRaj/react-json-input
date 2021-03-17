@@ -27,7 +27,9 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     ValidationNoErrors,
     ValidationErrors,
     InputName,
-    nameStyle
+    nameStyle,
+    disabled,
+    readOnly
   } = rootProps
 
   const itemSchemas = arraySchema(schema)
@@ -148,7 +150,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           <td></td>
           <InputName rootProps={rootProps} name={getSubName(name, '[+]', nameStyle)} />
           <td>
-            <button onClick={handleNewElement}>New Element</button>
+            <button onClick={handleNewElement} disabled={disabled || readOnly}>New Element</button>
           </td>
         </tr>
       )}

@@ -1,5 +1,5 @@
 import { JSONSchema7 } from 'json-schema'
-import { FC, useState } from 'react'
+import { ChangeEventHandler, FC, useCallback, useState } from 'react'
 import JsonInput from '../package/lib/JsonInput'
 import JsonPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/acai.css'
@@ -25,13 +25,23 @@ const schema: JSONSchema7 = {
 }
 
 const App: FC = () => {
+  const [disabled, setDisabled] = useState(false)
   const [value, setValue] = useState(valueFromSchema(undefined, defaultInputs, schema))
+
+  const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
+    setDisabled(e.target.checked)
+  }, [setDisabled])
 
   return (
     <>
       <h1>React Json Input</h1>
+      <h2>Options</h2>
+      <label>
+        <input type='checkbox' checked={disabled} onChange={handleDisabledChange} />
+        Toggle disabled
+      </label>
       <h2>Json Input</h2>
-      <JsonInput schema={schema} value={value} onChange={setValue} />
+      <JsonInput schema={schema} value={value} onChange={setValue} disabled={disabled} />
       <h2>Pretty Printed Json</h2>
       <JsonPretty json={value} />
     </>

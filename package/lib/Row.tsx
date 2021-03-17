@@ -1,5 +1,5 @@
 import React from 'react'
-import DeleteButton from './deleteButton'
+import DeleteButton from './_deleteButton'
 import { RowComponent } from './props'
 
 const Row: RowComponent = props => {

@@ -14,7 +14,7 @@ const Row: RowComponent = props => {
       <InputName rootProps={rootProps} name={name} />
       <td>{children}</td>
       <td>{inputSelector}</td>
-      <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
+      <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
     </tr>
   )
 }

@@ -8,6 +8,7 @@ import ValidationNoErrors from './ValidationNoErrors'
 import ValidationErrors from './ValidationErrors'
 import InputName from './InputName'
 import defaultInputs from './defaultInputs'
+import DeleteButton from './DeleteButton'
 
 const defaultProps: BaseProps = {
   Container: Container,
@@ -16,6 +17,7 @@ const defaultProps: BaseProps = {
   Validation: Validation,
   ValidationNoErrors: ValidationNoErrors,
   ValidationErrors: ValidationErrors,
+  DeleteButton: DeleteButton,
   Row: Row,
   InputName: InputName,
   schema: {},

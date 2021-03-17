@@ -1,6 +1,6 @@
 import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
-import { FunctionComponent, ReactNode } from 'react'
+import { ComponentType, DetailsHTMLAttributes, FunctionComponent, ReactNode } from 'react'
 import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
@@ -123,6 +123,12 @@ interface InputNameProps extends PropsWithRootProps {
 
 export type InputNameComponent = FunctionComponent<InputNameProps>
 
+interface DeleteButtonProps extends PropsWithRootProps {
+  onClick: DetailsHTMLAttributes<HTMLSpanElement>['onClick']
+}
+
+export type DeleteButtonComponent = ComponentType<DeleteButtonProps>
+
 export interface BaseProps {
   Container: ContainerComponent
   InputChooser: InputChooserComponent
@@ -132,6 +138,7 @@ export interface BaseProps {
   ValidationErrors: ValidationErrorsComponent
   Row: RowComponent
   InputName: InputNameComponent
+  DeleteButton: DeleteButtonComponent
   schema: JSONSchema7
   inputs: Array<Input<any, any>>
   readOnly: boolean

@@ -70,7 +70,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
         <InputName rootProps={rootProps} name={name} />
         <td />
         <td>{children}</td>
-        <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
+        <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
       </tr>
       {Object.keys(value).map(key => {
         const itemSchema = definitionToSchema(properties[key])

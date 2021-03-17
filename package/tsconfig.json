@@ -4,7 +4,7 @@
       "ES2019",
       "DOM"
     ],
-    "jsx": "react",
+    "jsx": "preserve",
     "esModuleInterop": true,
     "declaration": true,
     "strictNullChecks": true,

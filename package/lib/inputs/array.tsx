@@ -72,7 +72,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
         <InputName rootProps={rootProps} name={name} />
         <td />
         <td>{children}</td>
-        <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
+        <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
       </tr>
       {value.map((element, i) => {
         const selectedInput = inputData[i]

@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 import arraySchema from '../arraySchema'
-import DeleteButton from '../_deleteButton'
+import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'

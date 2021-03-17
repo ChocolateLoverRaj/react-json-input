@@ -29,7 +29,9 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     nameStyle,
     inputs,
     InputChooser,
-    ValidationErrors
+    ValidationErrors,
+    disabled,
+    readOnly
   } = rootProps
 
   const required = schema.required ?? []
@@ -119,7 +121,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
           <td />
           <InputName rootProps={rootProps} name={getSubName(name, '.+', nameStyle)} />
           <td>
-            <select value='' onChange={handleNewKey}>
+            <select value='' onChange={handleNewKey} disabled={disabled || readOnly}>
               <option value=''>New Key</option>
               {addableProperties.map(key => (
                 <option key={key} value={key}>{key}</option>

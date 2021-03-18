@@ -4,6 +4,7 @@ import InputNumber from 'rc-input-number'
 import rowProps from '../rowProps'
 import isEnum from '../isEnum'
 import RootContext from '../RootContext'
+import isAnyOf from '../isAnyOf'
 
 const NumberInputComponent: InputComponent<number> = props => {
   const { value, onChange } = props
@@ -28,7 +29,7 @@ const NumberInputComponent: InputComponent<number> = props => {
 const numberInput: Input<number, undefined> = {
   name: 'number',
   Component: NumberInputComponent,
-  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'number'),
+  isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'number'),
   isType: value => typeof value === 'number',
   to: value => {
     const n = Number(value)

@@ -6,7 +6,7 @@ import { NameStyle } from './nameStyle'
 export type OnChange<T> = (newValue: T) => void
 
 interface ContainerProps {
-  errors?: ErrorObject[]
+  errors: ErrorObject[]
   selectedInput: SelectedInput
   onSelectedInputChange: OnSelectedInputChange
 }
@@ -21,10 +21,10 @@ export type OnInputStateChange<T> = (newInputData: T) => void
 
 export interface InputProps<Value, State> {
   value: Value
-  onChange: (neValue: Value) => void
+  onChange: (newValue: Value) => void
   schema: JSONSchema7
   children: ReactNode
-  errors?: ErrorObject[]
+  errors: ErrorObject[]
   name: string
   onDelete?: () => void
   inputState: State
@@ -33,7 +33,7 @@ export interface InputProps<Value, State> {
 
 export type InputComponent<Value = any, InputData = undefined> = ComponentType<InputProps<Value, InputData>>
 
-interface Initial<Value = any, State = any> {
+export interface Initial<Value = any, State = any> {
   value: Value
   state: State
 }
@@ -42,7 +42,7 @@ export interface Input<Value = any, State = any> {
   name: string
   isValid: IsValid
   isType: IsType
-  to: (value: any, state: State, schema: JSONSchema7, inputs: Array<Input<any, any>>) => Initial<Value, State>
+  to: (value: any, state: State | undefined, schema: JSONSchema7, inputs: Array<Input<any, any>>) => Initial<Value, State>
   Component: InputComponent<Value, State>
 }
 
@@ -60,7 +60,7 @@ interface InputChooserProps {
   name: string
   value: any
   onChange: ControlledPropsOnChange
-  errors?: ErrorObject[]
+  errors: ErrorObject[]
   onDelete?: RowPropsWithoutChildrenOnDelete
   selectedInput: SelectedInput<any, any>
   onSelectedInputChange: OnSelectedInputChange<any, any>

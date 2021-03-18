@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, useCallback, useContext } from 'react'
+import isAnyOf from '../isAnyOf'
 import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
 import RootContext from '../RootContext'
@@ -28,7 +29,7 @@ const StringInputComponent: InputComponent<string> = props => {
 const stringInput: Input<string, undefined> = {
   name: 'string',
   Component: StringInputComponent,
-  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'string'),
+  isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'string'),
   isType: value => typeof value === 'string',
   to: value => ({
     value: String(value),

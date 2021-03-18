@@ -47,7 +47,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
       }}
     >
       <Container
-        errors={errors ?? undefined}
+        errors={errors ?? []}
         selectedInput={selectedInput}
         onSelectedInputChange={setSelectedInput}
       />

@@ -7,6 +7,7 @@ import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildren
 import definitionToSchema from '../definitionToSchema'
 import isEnum from '../isEnum'
 import RootContext from '../RootContext'
+import isAnyOf from '../isAnyOf'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
   const {
@@ -79,7 +80,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
         const selectedInput = inputData[i]
         const itemSchema = i < itemSchemas.length ? itemSchemas[i] : newItemSchema
         const elementErrors = errors
-          ?.filter(error => error.dataPath.startsWith(`/${i}`))
+          .filter(error => error.dataPath.startsWith(`/${i}`))
           .map(error => ({ ...error, dataPath: error.dataPath.slice(`/${i}`.length) }))
 
         const handleChange: ControlledPropsOnChange = newValue => {
@@ -163,7 +164,7 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   name: 'array',
   Component: ArrayInputComponent,
   isType: value => value instanceof Array,
-  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'array'),
+  isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'array'),
   to: (value, state, schema, inputs) => {
     const { items, minItems, maxItems, additionalItems } = schema
     const additionalItemSchema = definitionToSchema(additionalItems)

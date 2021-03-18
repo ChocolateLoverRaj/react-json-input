@@ -8,29 +8,34 @@ import defaultInputs from '../package/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
   type: 'array',
-  items: [{
+  items: {
     type: 'object',
     properties: {
-      a: true,
-      b: true
+      key: {
+        anyOf: [{
+          type: 'boolean'
+        }, {
+          type: 'number'
+        }]
+      }
     },
-    required: ['a']
-  }, {
-    type: 'object',
-    properties: {
-      b: true,
-      c: true
-    }
-  }]
+    required: ['key']
+  },
+  minItems: 1
 }
 
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
+  const [pathStyle, setPathStyle] = useState(false)
   const [value, setValue] = useState(valueFromSchema(undefined, defaultInputs, schema))
 
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)
   }, [setDisabled])
+
+  const handleChangePathStyle = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
+    setPathStyle(e.target.checked)
+  }, [setPathStyle])
 
   return (
     <>
@@ -40,8 +45,20 @@ const App: FC = () => {
         <input type='checkbox' checked={disabled} onChange={handleDisabledChange} />
         Toggle disabled
       </label>
+      <label>
+        <input type='checkbox' checked={pathStyle} onChange={handleChangePathStyle} />
+        Toggle path name style
+      </label>
       <h2>Json Input</h2>
-      <JsonInput schema={schema} value={value} onChange={setValue} disabled={disabled} />
+      <JsonInput
+        schema={schema}
+        value={value}
+        onChange={setValue}
+        disabled={disabled}
+        nameStyle={pathStyle
+          ? { style: 'path' }
+          : { style: 'indent', spaces: 4 }}
+      />
       <h2>Pretty Printed Json</h2>
       <JsonPretty json={value} />
     </>

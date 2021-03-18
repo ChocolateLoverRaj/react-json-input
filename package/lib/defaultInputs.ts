@@ -5,6 +5,7 @@ import numberInput from './inputs/number'
 import stringInput from './inputs/string'
 import enumInput from './inputs/enum'
 import objectInput from './inputs/object'
+import anyOfInput from './inputs/anyOf'
 
 const defaultInputs = [
   stringInput,
@@ -13,7 +14,8 @@ const defaultInputs = [
   nullInput,
   arrayInput,
   enumInput,
-  objectInput
+  objectInput,
+  anyOfInput
 ]
 
 export default defaultInputs

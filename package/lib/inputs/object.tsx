@@ -5,6 +5,7 @@ import definitionToSchema from '../definitionToSchema'
 import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
+import isAnyOf from '../isAnyOf'
 import isEnum from '../isEnum'
 import { ControlledPropsOnChange, Input, InputComponent, OnSelectedInputChange, RowPropsWithoutChildrenOnDelete, SelectedInput } from '../props'
 import RootContext from '../RootContext'
@@ -139,7 +140,7 @@ const objectInput: Input<object, ObjectInputData> = {
   name: 'object',
   Component: ObjectInputComponent,
   isType: value => typeof value === 'object' && !(value instanceof Array),
-  isValid: schema => !isEnum(schema) && (schema.type === undefined || schema.type === 'object'),
+  isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'object'),
   to: (value, state, schema, inputs) => {
     // Additional properties not supported
     if (schema.additionalProperties !== undefined) {

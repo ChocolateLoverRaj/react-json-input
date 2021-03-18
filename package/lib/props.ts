@@ -1,6 +1,6 @@
 import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
-import { ComponentType, DetailsHTMLAttributes, FunctionComponent, ReactNode } from 'react'
+import { ComponentType, DetailsHTMLAttributes, ReactNode } from 'react'
 import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
@@ -31,7 +31,7 @@ export interface InputProps<Value, State> {
   onInputStateChange: OnInputStateChange<State>
 }
 
-export type InputComponent<Value = any, InputData = undefined> = FunctionComponent<InputProps<Value, InputData>>
+export type InputComponent<Value = any, InputData = undefined> = ComponentType<InputProps<Value, InputData>>
 
 interface Initial<Value = any, State = any> {
   value: Value
@@ -66,7 +66,7 @@ interface InputChooserProps {
   onSelectedInputChange: OnSelectedInputChange<any, any>
 }
 
-export type InputChooserComponent = FunctionComponent<InputChooserProps>
+export type InputChooserComponent = ComponentType<InputChooserProps>
 
 export type InputSelectorPropsOnchange = (newInput: Input) => void
 
@@ -76,13 +76,13 @@ interface InputSelectorProps {
   onChange: InputSelectorPropsOnchange
 }
 
-export type InputSelectorComponent = FunctionComponent<InputSelectorProps>
+export type InputSelectorComponent = ComponentType<InputSelectorProps>
 
 interface ValidationProps {
   errors?: ErrorObject[]
 }
 
-export type ValidationComponent = FunctionComponent<ValidationProps>
+export type ValidationComponent = ComponentType<ValidationProps>
 
 export type RowPropsWithoutChildrenOnDelete = () => void
 
@@ -97,21 +97,21 @@ interface RowProps extends RowPropsWithoutChildren {
   children: ReactNode
 }
 
-export type RowComponent = FunctionComponent<RowProps>
+export type RowComponent = ComponentType<RowProps>
 
-export type ValidationNoErrorsComponent = FunctionComponent
+export type ValidationNoErrorsComponent = ComponentType
 
 interface ValidationErrorsProps {
   message: string
 }
 
-export type ValidationErrorsComponent = FunctionComponent<ValidationErrorsProps>
+export type ValidationErrorsComponent = ComponentType<ValidationErrorsProps>
 
 interface InputNameProps {
   name: string
 }
 
-export type InputNameComponent = FunctionComponent<InputNameProps>
+export type InputNameComponent = ComponentType<InputNameProps>
 
 interface DeleteButtonProps {
   onClick: DetailsHTMLAttributes<HTMLSpanElement>['onClick']

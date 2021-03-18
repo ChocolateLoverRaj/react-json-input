@@ -1,9 +1,11 @@
-import React, { ChangeEventHandler, useCallback } from 'react'
+import React, { ChangeEventHandler, useCallback, useContext } from 'react'
 import { InputSelectorComponent } from './props'
+import RootContext from './RootContext'
 
 const InputSelector: InputSelectorComponent = props => {
-  const { inputs, rootProps, value: { name }, onChange } = props
-  const { readOnly, disabled } = rootProps
+  const { inputs, value: { name }, onChange } = props
+
+  const { readOnly, disabled } = useContext(RootContext)
 
   const handleChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(({ target: { value } }) => {
     onChange(inputs[value])

@@ -1,11 +1,13 @@
-import React, { ChangeEventHandler, useCallback } from 'react'
+import React, { ChangeEventHandler, useCallback, useContext } from 'react'
 import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
+import RootContext from '../RootContext'
 import rowProps from '../rowProps'
 
 const StringInputComponent: InputComponent<string> = props => {
-  const { value, onChange, rootProps } = props
-  const { readOnly, disabled, Row } = rootProps
+  const { value, onChange } = props
+
+  const { readOnly, disabled, Row } = useContext(RootContext)
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(({ target: { value } }) => {
     onChange(value)

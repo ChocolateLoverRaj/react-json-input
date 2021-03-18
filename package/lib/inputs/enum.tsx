@@ -1,17 +1,19 @@
 import never from 'never'
 import { Input, InputComponent } from '../props'
 import rowProps from '../rowProps'
-import React, { ChangeEventHandler, useCallback } from 'react'
+import React, { ChangeEventHandler, useCallback, useContext } from 'react'
 import { JSONSchema7 } from 'json-schema'
 import isEnum from '../isEnum'
+import RootContext from '../RootContext'
 
 type EnumType = string | number | null | boolean
 
 const getOptions = (schema: JSONSchema7): EnumType[] => schema.enum as EnumType[] ?? [schema.const]
 
 const EnumInputComponent: InputComponent<EnumType> = props => {
-  const { value, onChange, rootProps, schema } = props
-  const { readOnly, disabled, Row } = rootProps
+  const { value, onChange, schema } = props
+
+  const { readOnly, disabled, Row } = useContext(RootContext)
 
   const handleChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(e => {
     onChange(JSON.parse(e.target.value))

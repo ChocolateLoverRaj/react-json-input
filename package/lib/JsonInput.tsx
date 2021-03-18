@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import defaultProps from './defaultProps'
 import getValidInput from './getValidInput'
 import { OnChange, Props, SelectedInput } from './props'
+import RootContext from './RootContext'
 
 const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element => {
   const {
@@ -38,16 +39,20 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   const { errors } = validate
 
   return (
-    <Container
-      rootProps={{
+    <RootContext.Provider
+      value={{
         value: valueToUse,
         onChange: onChangeToUse,
         ...restProps
       }}
-      errors={errors ?? undefined}
-      selectedInput={selectedInput}
-      onSelectedInputChange={setSelectedInput}
-    />
+    >
+      <Container
+        errors={errors ?? undefined}
+        selectedInput={selectedInput}
+        onSelectedInputChange={setSelectedInput}
+      />
+    </RootContext.Provider>
+
   )
 }
 

@@ -1,18 +1,18 @@
 import { JSONSchema7Definition } from 'json-schema'
 import never from 'never'
-import React, { ChangeEventHandler } from 'react'
+import React, { ChangeEventHandler, useContext } from 'react'
 import definitionToSchema from '../definitionToSchema'
 import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import isEnum from '../isEnum'
 import { ControlledPropsOnChange, Input, InputComponent, OnSelectedInputChange, RowPropsWithoutChildrenOnDelete, SelectedInput } from '../props'
+import RootContext from '../RootContext'
 
 type ObjectInputData = Map<string, SelectedInput>
 
 const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
   const {
-    rootProps,
     name,
     children,
     onDelete,
@@ -23,6 +23,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     onInputStateChange,
     errors
   } = props
+
   const {
     ValidationNoErrors,
     InputName,
@@ -32,7 +33,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     ValidationErrors,
     disabled,
     readOnly
-  } = rootProps
+  } = useContext(RootContext)
 
   const required = schema.required ?? []
   const properties = schema.properties ?? {}
@@ -64,13 +65,13 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
       <tr>
         <td>
           {objectErrorMessage === false
-            ? <ValidationNoErrors rootProps={rootProps} />
-            : <ValidationErrors rootProps={rootProps} message={objectErrorMessage} />}
+            ? <ValidationNoErrors />
+            : <ValidationErrors message={objectErrorMessage} />}
         </td>
-        <InputName rootProps={rootProps} name={name} />
+        <InputName name={name} />
         <td />
         <td>{children}</td>
-        <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
+        <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
       </tr>
       {Object.keys(value).map(key => {
         const itemSchema = definitionToSchema(properties[key])
@@ -104,7 +105,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
         return (
           <InputChooser
             key={key}
-            rootProps={rootProps}
+
             name={getSubName(name, `.${key}`, nameStyle)}
             schema={itemSchema}
             value={value[key]}
@@ -119,7 +120,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
       {addableProperties.length > 0 && (
         <tr>
           <td />
-          <InputName rootProps={rootProps} name={getSubName(name, '.+', nameStyle)} />
+          <InputName name={getSubName(name, '.+', nameStyle)} />
           <td>
             <select value='' onChange={handleNewKey} disabled={disabled || readOnly}>
               <option value=''>New Key</option>

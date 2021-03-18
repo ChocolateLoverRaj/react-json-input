@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ContainerComponent } from './props'
+import RootContext from './RootContext'
 
 const Container: ContainerComponent = props => {
-  const { rootProps, errors, selectedInput, onSelectedInputChange } = props
-  const { schema, InputChooser, value, onChange } = rootProps
+  const { errors, selectedInput, onSelectedInputChange } = props
+
+  const { schema, InputChooser, value, onChange } = useContext(RootContext)
 
   return (
     <table>
       <tbody>
         <InputChooser
-          rootProps={rootProps}
           schema={schema}
           name=''
           value={value}

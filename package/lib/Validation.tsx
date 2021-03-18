@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ValidationComponent } from './props'
+import RootContext from './RootContext'
 
 const Validation: ValidationComponent = props => {
-  const { errors, rootProps } = props
-  const { ValidationNoErrors, ValidationErrors } = rootProps
+  const { errors } = props
+
+  const { ValidationNoErrors, ValidationErrors } = useContext(RootContext)
 
   return errors === undefined || errors.length === 0
-    ? <ValidationNoErrors rootProps={rootProps} />
+    ? <ValidationNoErrors />
     : (
       <ValidationErrors
-        rootProps={rootProps}
         message={errors
           .map(({ message }) => message)
           .join('\n')}

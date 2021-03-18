@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import DeleteButton from './DeleteButton'
 import { RowComponent } from './props'
+import RootContext from './RootContext'
 
 const Row: RowComponent = props => {
-  const { rootProps, errors, name, children, inputSelector, onDelete } = props
-  const { Validation, InputName } = rootProps
+  const { errors, name, children, inputSelector, onDelete } = props
+
+  const { Validation, InputName } = useContext(RootContext)
 
   return (
     <tr>
       <td>
-        <Validation rootProps={rootProps} errors={errors} />
+        <Validation errors={errors} />
       </td>
-      <InputName rootProps={rootProps} name={name} />
+      <InputName name={name} />
       <td>{children}</td>
       <td>{inputSelector}</td>
-      <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
+      <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
     </tr>
   )
 }

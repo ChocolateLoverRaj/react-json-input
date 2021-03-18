@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import isEnum from '../isEnum'
 import { Input, InputComponent } from '../props'
+import RootContext from '../RootContext'
 import rowProps from '../rowProps'
 
 const NullInputComponent: InputComponent<null> = props => {
-  const { rootProps: { Row } } = props
+  const { Row } = useContext(RootContext)
 
   return (
     <Row {...rowProps(props)}>null</Row>

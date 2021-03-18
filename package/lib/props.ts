@@ -6,13 +6,12 @@ import { NameStyle } from './nameStyle'
 export type OnChange<T> = (newValue: T) => void
 
 interface ContainerProps {
-  rootProps: ControlledProps<any>
   errors?: ErrorObject[]
   selectedInput: SelectedInput
   onSelectedInputChange: OnSelectedInputChange
 }
 
-export type ContainerComponent = FunctionComponent<ContainerProps>
+export type ContainerComponent = ComponentType<ContainerProps>
 
 type IsValid = (schema: JSONSchema7) => boolean
 
@@ -21,7 +20,6 @@ type IsType = (value: any) => boolean
 export type OnInputStateChange<T> = (newInputData: T) => void
 
 export interface InputProps<Value, State> {
-  rootProps: ControlledProps<any>
   value: Value
   onChange: (neValue: Value) => void
   schema: JSONSchema7
@@ -58,7 +56,6 @@ export interface SelectedInput<Value = any, State = any> {
 export type OnSelectedInputChange<Value = any, State = any> = (newSelectedInput: SelectedInput<Value, State>) => void
 
 interface InputChooserProps {
-  rootProps: ControlledProps<any>
   schema: JSONSchema7
   name: string
   value: any
@@ -74,7 +71,6 @@ export type InputChooserComponent = FunctionComponent<InputChooserProps>
 export type InputSelectorPropsOnchange = (newInput: Input) => void
 
 interface InputSelectorProps {
-  rootProps: ControlledProps<any>
   inputs: Input[]
   value: Input
   onChange: InputSelectorPropsOnchange
@@ -83,7 +79,6 @@ interface InputSelectorProps {
 export type InputSelectorComponent = FunctionComponent<InputSelectorProps>
 
 interface ValidationProps {
-  rootProps: ControlledProps<any>
   errors?: ErrorObject[]
 }
 
@@ -92,7 +87,6 @@ export type ValidationComponent = FunctionComponent<ValidationProps>
 export type RowPropsWithoutChildrenOnDelete = () => void
 
 export interface RowPropsWithoutChildren {
-  rootProps: ControlledProps<any>
   errors?: ErrorObject[]
   name: string
   inputSelector: ReactNode
@@ -105,25 +99,21 @@ interface RowProps extends RowPropsWithoutChildren {
 
 export type RowComponent = FunctionComponent<RowProps>
 
-interface PropsWithRootProps {
-  rootProps: ControlledProps<any>
-}
+export type ValidationNoErrorsComponent = FunctionComponent
 
-export type ValidationNoErrorsComponent = FunctionComponent<PropsWithRootProps>
-
-interface ValidationErrorsProps extends PropsWithRootProps {
+interface ValidationErrorsProps {
   message: string
 }
 
 export type ValidationErrorsComponent = FunctionComponent<ValidationErrorsProps>
 
-interface InputNameProps extends PropsWithRootProps {
+interface InputNameProps {
   name: string
 }
 
 export type InputNameComponent = FunctionComponent<InputNameProps>
 
-interface DeleteButtonProps extends PropsWithRootProps {
+interface DeleteButtonProps {
   onClick: DetailsHTMLAttributes<HTMLSpanElement>['onClick']
 }
 
@@ -157,6 +147,6 @@ interface ControlProps<T> {
 
 type UncontrolledProps<T> = BaseProps & Partial<ControlProps<T>> & Partial<DefaultValueProps<T>>
 
-type ControlledProps<T> = BaseProps & ControlProps<T> & Partial<DefaultValueProps<T>>
+export type ControlledProps<T = any> = BaseProps & ControlProps<T> & Partial<DefaultValueProps<T>>
 
 export type Props<T> = UncontrolledProps<T> | ControlledProps<T>

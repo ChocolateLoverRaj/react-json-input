@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { InputChooserComponent, InputSelectorPropsOnchange, OnInputStateChange } from './props'
+import RootContext from './RootContext'
 
 const InputChooser: InputChooserComponent = props => {
   const {
     name,
-    rootProps,
     schema,
     value,
     onChange,
@@ -13,9 +13,10 @@ const InputChooser: InputChooserComponent = props => {
     selectedInput,
     onSelectedInputChange
   } = props
-  const { InputSelector, inputs } = rootProps
   const { input, state } = selectedInput
   const { Component } = input
+
+  const { InputSelector, inputs } = useContext(RootContext)
 
   const filteredInputs = inputs.filter(({ isValid }) => isValid(schema))
 
@@ -34,7 +35,6 @@ const InputChooser: InputChooserComponent = props => {
 
   return (
     <Component
-      rootProps={rootProps}
       value={value}
       onChange={onChange}
       schema={schema}
@@ -45,7 +45,6 @@ const InputChooser: InputChooserComponent = props => {
       onInputStateChange={handleInputStateChange}
     >
       <InputSelector
-        rootProps={rootProps}
         value={input}
         onChange={handleInputChange}
         inputs={filteredInputs}

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler, useContext } from 'react'
 import arraySchema from '../arraySchema'
 import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
@@ -6,12 +6,12 @@ import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
 import definitionToSchema from '../definitionToSchema'
 import isEnum from '../isEnum'
+import RootContext from '../RootContext'
 
 const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = props => {
   const {
     schema,
     name,
-    rootProps,
     children,
     value,
     onChange,
@@ -21,6 +21,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     errors
   } = props
   const { additionalItems, items } = schema
+
   const {
     InputChooser,
     inputs,
@@ -30,7 +31,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     nameStyle,
     disabled,
     readOnly
-  } = rootProps
+  } = useContext(RootContext)
 
   const itemSchemas = arraySchema(schema)
   const minItems = schema.minItems ?? 0
@@ -66,13 +67,13 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       <tr>
         <td>
           {arrayErrorMessage === false
-            ? <ValidationNoErrors rootProps={rootProps} />
-            : <ValidationErrors rootProps={rootProps} message={arrayErrorMessage} />}
+            ? <ValidationNoErrors />
+            : <ValidationErrors message={arrayErrorMessage} />}
         </td>
-        <InputName rootProps={rootProps} name={name} />
+        <InputName name={name} />
         <td />
         <td>{children}</td>
-        <td>{onDelete !== undefined && <DeleteButton rootProps={rootProps} onClick={onDelete} />}</td>
+        <td>{onDelete !== undefined && <DeleteButton onClick={onDelete} />}</td>
       </tr>
       {value.map((element, i) => {
         const selectedInput = inputData[i]
@@ -133,7 +134,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
         return (
           <InputChooser
             key={i}
-            rootProps={rootProps}
+
             name={getSubName(name, `[${i}]`, nameStyle)}
             schema={itemSchema}
             value={element}
@@ -148,7 +149,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       {canAddNewItem && (
         <tr>
           <td></td>
-          <InputName rootProps={rootProps} name={getSubName(name, '[+]', nameStyle)} />
+          <InputName name={getSubName(name, '[+]', nameStyle)} />
           <td>
             <button onClick={handleNewElement} disabled={disabled || readOnly}>New Element</button>
           </td>

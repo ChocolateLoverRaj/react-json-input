@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Input, InputComponent } from '../props'
 import InputNumber from 'rc-input-number'
 import rowProps from '../rowProps'
 import isEnum from '../isEnum'
+import RootContext from '../RootContext'
 
 const NumberInputComponent: InputComponent<number> = props => {
-  const { value, onChange, rootProps } = props
-  const { readOnly, disabled, Row } = rootProps
+  const { value, onChange } = props
+
+  const { readOnly, disabled, Row } = useContext(RootContext)
 
   const handleChange = useCallback((value: string | number | undefined) => {
     onChange(typeof value === 'number' ? value : 0)

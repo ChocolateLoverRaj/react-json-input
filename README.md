@@ -2,3 +2,16 @@
 
 # react-json-input
 A React component that is like a complex input element.
+
+## Installing
+This project uses [GitHub Packages](https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages#installing-a-package).
+
+Create a `.npmrc` file with the contents:
+```
+@chocolateloverraj:registry=https://npm.pkg.github.com
+```
+Then do
+```bash
+npm i @chocolateloverraj/react-json-input
+```
+to install the package.

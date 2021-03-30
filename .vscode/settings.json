@@ -4,7 +4,8 @@
         "Paranjpe",
         "acai",
         "chocolateloverraj",
-        "nextjs"
+        "nextjs",
+        "npmrc"
     ],
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove",

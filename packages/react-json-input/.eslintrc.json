@@ -4,10 +4,6 @@
     "standard-with-typescript",
     "plugin:import/typescript"
   ],
-  "ignorePatterns": [
-    "**/*.js",
-    "**/*.d.ts"
-  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -15,6 +11,7 @@
     "react-hooks",
     "import"
   ],
+  "ignorePatterns": "lib/scss.d.ts",
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
@@ -24,7 +21,7 @@
         "missingExports": true,
         "unusedExports": true,
         "ignoreExports": [
-          "pages/*.tsx"
+          "lib/JsonInput.tsx"
         ]
       }
     ]

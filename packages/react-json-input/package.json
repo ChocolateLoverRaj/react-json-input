@@ -11,36 +11,30 @@
     "url": "https://github.com/ChocolateLoverRaj/react-json-input/issues"
   },
   "repository": {
-    "url": "https://github.com/ChocolateLoverRaj/react-json-input"
+    "url": "https://github.com/ChocolateLoverRaj/react-json-input",
+    "directory": "packages/react-json-input"
   },
   "homepage": "https://react-json-input.netlify.app/",
-  "main": "lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "lib/JsonInput.tsx",
   "scripts": {
-    "build:package": "tsc --project package",
-    "build:demo": "next build",
-    "lint": "eslint .",
-    "dev": "next"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@types/json-schema": "^7.0.7",
     "ajv": "^7.1.1",
     "never": "^1.0.3",
-    "rc-input-number": "^6.2.0",
-    "react": "^17.0.1"
+    "rc-input-number": "^6.2.0"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^3.0.3",
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "eslint": "^7.20.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "next": "^10.0.7",
-    "react-dom": "^17.0.1",
-    "react-json-pretty": "^2.2.0",
-    "sass": "^1.32.8",
     "ts-standard": "^10.0.0",
     "typescript": "^4.2.3"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
   }
 }

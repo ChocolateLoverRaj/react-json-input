@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "extends": [
+    "standard-with-typescript",
+    "plugin:import/typescript"
+  ],
+  "ignorePatterns": "next-env.d.ts",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react-hooks",
+    "import"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "import/no-unused-modules": [
+      2,
+      {
+        "missingExports": true,
+        "unusedExports": true,
+        "ignoreExports": [
+          "pages/*.tsx",
+          "next.config.js"
+        ]
+      }
+    ]
+  }
+}

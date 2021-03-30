@@ -1,5 +1,5 @@
 {
-  "name": "react-json-input",
+  "name": "@chocolateloverraj/react-json-input",
   "description": "A React component that is like a complex input element.",
   "version": "0.1.0",
   "author": {
@@ -15,6 +15,9 @@
     "directory": "packages/react-json-input"
   },
   "homepage": "https://react-json-input.netlify.app/",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "lib/JsonInput.tsx",
   "scripts": {
     "lint": "eslint ."

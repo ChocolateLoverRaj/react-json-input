@@ -4,7 +4,6 @@ import JsonInput from 'react-json-input/lib/JsonInput'
 import JsonPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/acai.css'
 import valueFromSchema from 'react-json-input/lib/valueFromSchema'
-import defaultInputs from 'react-json-input/lib/defaultInputs'
 
 const schema: JSONSchema7 = {
   type: 'array',
@@ -27,7 +26,7 @@ const schema: JSONSchema7 = {
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
   const [pathStyle, setPathStyle] = useState(false)
-  const [value, setValue] = useState(valueFromSchema(undefined, defaultInputs, schema))
+  const [value, setValue] = useState(valueFromSchema(schema))
 
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)

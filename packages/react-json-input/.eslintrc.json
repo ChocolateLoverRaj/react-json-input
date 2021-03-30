@@ -21,7 +21,8 @@
         "missingExports": true,
         "unusedExports": true,
         "ignoreExports": [
-          "lib/JsonInput.tsx"
+          "lib/JsonInput.tsx",
+          "lib/valueFromSchema.ts"
         ]
       }
     ]

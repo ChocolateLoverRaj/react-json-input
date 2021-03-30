@@ -12,9 +12,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: cd demo
-      - run: npm i
-      - run: npm run lint
+      - run: |
+          npm i
+          npm run lint
+        working-directory: ./demo
   package:
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +23,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: cd demo
-      - run: npm i
-      - run: npm run lint
+      - run: |
+          npm i
+          npm run lint
+        working-directory: ./demo

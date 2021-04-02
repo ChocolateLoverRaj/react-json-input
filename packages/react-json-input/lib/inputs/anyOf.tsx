@@ -110,7 +110,7 @@ const anyOfInput: Input<any, InputData> = {
   to: (value, state, schema, inputs) => {
     const getInitialForOption = (index: number): Initial<any, InputData> => {
       const optionSchema = definitionToSchema(options[index])
-      const input = getValidInput(inputs, optionSchema)
+      const input = getValidInput(inputs, optionSchema, value)
       const { state, value: optionValue } = input.to(value, undefined, optionSchema, inputs)
       return {
         state: {
@@ -145,7 +145,23 @@ const anyOfInput: Input<any, InputData> = {
         return getInitialForOption(index)
       }
     } else {
-      return getInitialForOption(0)
+      for (let i = 0; i < options.length; i++) {
+        const optionSchema = definitionToSchema(options[i])
+        const input = inputs
+          .filter(({ isValid }) => isValid(optionSchema))
+          .find(({ isType }) => isType(value, optionSchema, inputs))
+        if (input === undefined) continue
+        const { state, value: optionValue } = input.to(value, undefined, optionSchema, inputs)
+        console.log('using option', i)
+        return {
+          state: {
+            index: i,
+            selectedInput: { input, state }
+          },
+          value: optionValue
+        }
+      }
+      throw new Error('No options match the value')
     }
   }
 }

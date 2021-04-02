@@ -15,7 +15,7 @@ const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element =
   } = { ...defaultProps, ...props }
   const { Container, schema, inputs } = restProps
 
-  const input = getValidInput(inputs, schema)
+  const input = getValidInput(inputs, schema, value)
   const { value: initialValue, state } = input.to(value, undefined, schema, inputs)
 
   let valueToUse: T

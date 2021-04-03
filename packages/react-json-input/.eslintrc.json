@@ -11,7 +11,11 @@
     "react-hooks",
     "import"
   ],
-  "ignorePatterns": "lib/scss.d.ts",
+  "ignorePatterns": [
+    "lib/scss.d.ts",
+    "dist",
+    "**/*.snap"
+  ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
@@ -22,7 +26,10 @@
         "unusedExports": true,
         "ignoreExports": [
           "lib/JsonInput.tsx",
-          "lib/valueFromSchema.ts"
+          "lib/valueFromSchema.ts",
+          "**/*.test.tsx",
+          "preprocess.cjs",
+          "babel.config.cjs"
         ]
       }
     ]

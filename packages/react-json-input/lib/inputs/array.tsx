@@ -4,7 +4,6 @@ import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
-import definitionToSchema from '../definitionToSchema'
 import isEnum from '../isEnum'
 import RootContext from '../RootContext'
 import isAnyOf from '../isAnyOf'
@@ -21,7 +20,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onDelete,
     errors
   } = props
-  const { additionalItems, items } = schema
+  const { items } = schema
 
   const {
     InputChooser,
@@ -34,21 +33,12 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     readOnly
   } = useContext(RootContext)
 
-  const itemSchemas = arraySchema(schema)
+  // itemSchemas, including the newItemSchema
+  const fullItemSchemas = [...arraySchema(schema, value.length + 1)]
+  const itemSchemas = fullItemSchemas.slice(0, -1)
   const minItems = schema.minItems ?? 0
-  const maxItems = schema.maxItems ?? Infinity
-  const newItemSchema = items instanceof Array
-    ? value.length < items.length
-      ? itemSchemas[value.length]
-      : definitionToSchema(additionalItems)
-    : definitionToSchema(items)
-  const canAddNewItem = (
-    value.length < maxItems &&
-    (
-      (items instanceof Array && value.length < items.length) ||
-      additionalItems !== false
-    )
-  )
+  const [newItemSchema] = fullItemSchemas.slice(value.length)
+  const canAddNewItem = newItemSchema !== undefined
 
   const handleNewElement: MouseEventHandler<HTMLButtonElement> = () => {
     const input = getValidInput(inputs, newItemSchema)
@@ -78,7 +68,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
       </tr>
       {value.map((element, i) => {
         const selectedInput = inputData[i]
-        const itemSchema = i < itemSchemas.length ? itemSchemas[i] : newItemSchema
+        const itemSchema = itemSchemas[i]
         const elementErrors = errors
           .filter(error => error.dataPath.startsWith(`/${i}`))
           .map(error => ({ ...error, dataPath: error.dataPath.slice(`/${i}`.length) }))
@@ -165,8 +155,8 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   Component: ArrayInputComponent,
   isType: (value, schema, inputs) => {
     if (!(value instanceof Array)) return false
-    const itemSchemas = arraySchema(schema)
-    if (value.length > itemSchemas.length) return false
+    const itemSchemas = [...arraySchema(schema, value.length)]
+    console.log(itemSchemas)
     for (let i = 0; i < value.length; i++) {
       const item = value[i]
       const itemSchema = itemSchemas[i]
@@ -179,18 +169,11 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   },
   isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'array'),
   to: (value, state, schema, inputs) => {
-    const { items, minItems, maxItems, additionalItems } = schema
-    const additionalItemSchema = definitionToSchema(additionalItems)
-    const itemSchemas = arraySchema(schema)
+    const itemSchemas = [...arraySchema(schema, value instanceof Array ? value.length : 0)]
     const newValue: any[] = []
     const newState: SelectedInput[] = []
-    const maxLength = items instanceof Array
-      ? minItems ?? items.length
-      : value instanceof Array
-        ? Math.min(value.length, maxItems ?? Infinity)
-        : minItems ?? 0
-    for (let i = 0; i < maxLength; i++) {
-      const itemSchema = i < itemSchemas.length ? itemSchemas[i] : additionalItemSchema
+    for (let i = 0; i < itemSchemas.length; i++) {
+      const itemSchema = itemSchemas[i]
       const itemValue = value?.[i]
       const itemState = state?.[i]
       const input = getValidInput(inputs, itemSchema)

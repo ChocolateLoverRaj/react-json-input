@@ -6,30 +6,16 @@ import 'react-json-pretty/themes/acai.css'
 
 const schema: JSONSchema7 = {
   anyOf: [{
-    type: 'array',
-    items: [{
-      type: 'string'
-    }, {
-      type: 'string'
-    }],
-    minItems: 2,
-    maxItems: 2
+    type: 'string'
   }, {
-    type: 'array',
-    items: [{
-      type: 'number'
-    }, {
-      type: 'number'
-    }],
-    minItems: 2,
-    maxItems: 2
+    type: 'array'
   }]
 }
 
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
   const [pathStyle, setPathStyle] = useState(false)
-  const [value, setValue] = useState([1, 2])
+  const [value, setValue] = useState(['first element', 'second element'])
 
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)

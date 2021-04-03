@@ -1,6 +1,6 @@
 import { JSONSchema7 } from 'json-schema'
 import { ChangeEventHandler, FC, useCallback, useState } from 'react'
-import JsonInput from 'react-json-input/lib/JsonInput'
+import { JsonInput } from 'react-json-input'
 import JsonPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/acai.css'
 

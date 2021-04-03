@@ -18,7 +18,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "main": "lib/JsonInput.tsx",
+  "main": "lib/index.ts",
   "scripts": {
     "lint": "eslint ."
   },

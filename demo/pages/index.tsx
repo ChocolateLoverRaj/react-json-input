@@ -3,30 +3,33 @@ import { ChangeEventHandler, FC, useCallback, useState } from 'react'
 import JsonInput from 'react-json-input/lib/JsonInput'
 import JsonPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/acai.css'
-import valueFromSchema from 'react-json-input/lib/valueFromSchema'
 
 const schema: JSONSchema7 = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      key: {
-        anyOf: [{
-          type: 'boolean'
-        }, {
-          type: 'number'
-        }]
-      }
-    },
-    required: ['key']
-  },
-  minItems: 1
+  anyOf: [{
+    type: 'array',
+    items: [{
+      type: 'string'
+    }, {
+      type: 'string'
+    }],
+    minItems: 2,
+    maxItems: 2
+  }, {
+    type: 'array',
+    items: [{
+      type: 'number'
+    }, {
+      type: 'number'
+    }],
+    minItems: 2,
+    maxItems: 2
+  }]
 }
 
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
   const [pathStyle, setPathStyle] = useState(false)
-  const [value, setValue] = useState(valueFromSchema(schema))
+  const [value, setValue] = useState([1, 2])
 
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)

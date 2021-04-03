@@ -1,3 +1,4 @@
+import { JSONSchema7 } from 'json-schema'
 import never from 'never'
 import { ChangeEventHandler, useCallback, useContext } from 'react'
 import definitionToSchema from '../definitionToSchema'
@@ -108,17 +109,36 @@ const anyOfInput: Input<any, InputData> = {
   isType: () => true,
   isValid: isAnyOf,
   to: (value, state, schema, inputs) => {
-    const getInitialForOption = (index: number): Initial<any, InputData> => {
-      const optionSchema = definitionToSchema(options[index])
-      const input = getValidInput(inputs, optionSchema)
-      const { state, value: optionValue } = input.to(value, undefined, optionSchema, inputs)
+    const getInitialFromInput = (input: Input, schema: JSONSchema7, index: number): Initial<any, InputData> => {
+      const { state, value: optionValue } = input.to(value, undefined, schema, inputs)
       return {
         state: {
-          index: 0,
+          index,
           selectedInput: { input, state }
         },
         value: optionValue
       }
+    }
+
+    const getInitialForOption = (index: number): Initial<any, InputData> | undefined => {
+      const optionSchema = definitionToSchema(options[index])
+      const input = inputs
+        .filter(({ isValid }) => isValid(optionSchema))
+        .find(({ isType }) => isType(value, optionSchema, inputs))
+      if (input === undefined) return
+      return getInitialFromInput(input, schema, index)
+    }
+
+    const findValidOption = (): Initial<any, InputData> => {
+      // Try to find an option that matches the type
+      for (let i = 0; i < options.length; i++) {
+        const initial = getInitialForOption(i)
+        if (initial !== undefined) return initial
+      }
+      // Force it to use first option
+      const optionSchema = definitionToSchema(options[0])
+      const input = inputs.filter(({ isValid }) => isValid(optionSchema))[0] ?? never('No valid input')
+      return getInitialFromInput(input, optionSchema, 0)
     }
 
     const options = schema.anyOf ?? never('No anyOf in schema')
@@ -142,10 +162,10 @@ const anyOfInput: Input<any, InputData> = {
           }
         }
       } else {
-        return getInitialForOption(index)
+        return getInitialForOption(index) ?? findValidOption()
       }
     } else {
-      return getInitialForOption(0)
+      return findValidOption()
     }
   }
 }

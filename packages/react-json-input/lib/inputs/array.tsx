@@ -163,7 +163,20 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 const arrayInput: Input<any[], SelectedInput[]> = {
   name: 'array',
   Component: ArrayInputComponent,
-  isType: value => value instanceof Array,
+  isType: (value, schema, inputs) => {
+    if (!(value instanceof Array)) return false
+    const itemSchemas = arraySchema(schema)
+    if (value.length > itemSchemas.length) return false
+    for (let i = 0; i < value.length; i++) {
+      const item = value[i]
+      const itemSchema = itemSchemas[i]
+      if (inputs
+        .filter(({ isValid }) => isValid(itemSchema))
+        .find(({ isType }) => isType(item, itemSchema, inputs)) === undefined
+      ) return false
+    }
+    return true
+  },
   isValid: schema => !isEnum(schema) && !isAnyOf(schema) && (schema.type === undefined || schema.type === 'array'),
   to: (value, state, schema, inputs) => {
     const { items, minItems, maxItems, additionalItems } = schema

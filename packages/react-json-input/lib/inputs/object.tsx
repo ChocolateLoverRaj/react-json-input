@@ -149,7 +149,7 @@ const objectInput: Input<object, ObjectInputData> = {
 
     const required = new Set(schema.required)
     const properties = schema.properties ?? {}
-    const newValue: object = objectInput.isType(value) ? { ...value } : {}
+    const newValue: object = objectInput.isType(value, schema, inputs) ? { ...value } : {}
     const newState: ObjectInputData = state instanceof Map ? state : new Map()
 
     // Add or modify a key

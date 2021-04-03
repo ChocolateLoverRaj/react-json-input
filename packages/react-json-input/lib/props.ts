@@ -15,7 +15,7 @@ export type ContainerComponent = ComponentType<ContainerProps>
 
 type IsValid = (schema: JSONSchema7) => boolean
 
-type IsType = (value: any) => boolean
+type IsType = (value: any, schema: JSONSchema7, inputs: Input[]) => boolean
 
 export type OnInputStateChange<T> = (newInputData: T) => void
 

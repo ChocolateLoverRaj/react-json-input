@@ -2,19 +2,19 @@ import { JSONSchema7 } from 'json-schema'
 import definitionToSchema from './definitionToSchema'
 
 /**
- * Convert an array schema into an array of item schemas
+ * Convert an array schema into an array of item schemas.
+ * Note: The number of items can be greater than limit because of the `minItems` property.
  */
-const arraySchema = (schema: JSONSchema7): JSONSchema7[] => {
-  const { items, minItems } = schema
-  const arr: JSONSchema7[] = []
-  const itemsLength = items instanceof Array ? items.length : minItems ?? 0
+function * arraySchema (schema: JSONSchema7, limit: number): Generator<JSONSchema7> {
+  const { items, maxItems, additionalItems, minItems } = schema
+  const additionalItemSchema = definitionToSchema(additionalItems)
+  const itemsLength = Math.max(minItems ?? 0, Math.min(maxItems ?? Infinity, limit))
   for (let i = 0; i < itemsLength; i++) {
     const itemSchema: JSONSchema7 = items instanceof Array
-      ? definitionToSchema(items[i])
+      ? definitionToSchema(i < items.length ? items[i] : additionalItemSchema)
       : definitionToSchema(items)
-    arr.push(itemSchema)
+    yield itemSchema
   }
-  return arr
 }
 
 export default arraySchema

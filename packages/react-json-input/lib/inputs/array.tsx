@@ -164,7 +164,6 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   name: 'array',
   Component: ArrayInputComponent,
   isType: (value, schema, inputs) => {
-    console.log(value, schema)
     if (!(value instanceof Array)) return false
     const itemSchemas = arraySchema(schema)
     if (value.length > itemSchemas.length) return false

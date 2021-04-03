@@ -108,17 +108,28 @@ const anyOfInput: Input<any, InputData> = {
   isType: () => true,
   isValid: isAnyOf,
   to: (value, state, schema, inputs) => {
-    const getInitialForOption = (index: number): Initial<any, InputData> => {
+    const getInitialForOption = (index: number): Initial<any, InputData> | undefined => {
       const optionSchema = definitionToSchema(options[index])
-      const input = getValidInput(inputs, optionSchema, value)
+      const input = inputs
+        .filter(({ isValid }) => isValid(optionSchema))
+        .find(({ isType }) => isType(value, optionSchema, inputs))
+      if (input === undefined) return
       const { state, value: optionValue } = input.to(value, undefined, optionSchema, inputs)
       return {
         state: {
-          index: 0,
+          index,
           selectedInput: { input, state }
         },
         value: optionValue
       }
+    }
+
+    const findValidOption = (): Initial<any, InputData> => {
+      for (let i = 0; i < options.length; i++) {
+        const initial = getInitialForOption(i)
+        if (initial !== undefined) return initial
+      }
+      throw new Error('No options match the value')
     }
 
     const options = schema.anyOf ?? never('No anyOf in schema')
@@ -142,26 +153,10 @@ const anyOfInput: Input<any, InputData> = {
           }
         }
       } else {
-        return getInitialForOption(index)
+        return getInitialForOption(index) ?? findValidOption()
       }
     } else {
-      for (let i = 0; i < options.length; i++) {
-        const optionSchema = definitionToSchema(options[i])
-        const input = inputs
-          .filter(({ isValid }) => isValid(optionSchema))
-          .find(({ isType }) => isType(value, optionSchema, inputs))
-        if (input === undefined) continue
-        const { state, value: optionValue } = input.to(value, undefined, optionSchema, inputs)
-        console.log('using option', i)
-        return {
-          state: {
-            index: i,
-            selectedInput: { input, state }
-          },
-          value: optionValue
-        }
-      }
-      throw new Error('No options match the value')
+      return findValidOption()
     }
   }
 }

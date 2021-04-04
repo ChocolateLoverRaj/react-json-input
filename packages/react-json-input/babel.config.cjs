@@ -8,7 +8,8 @@ module.exports = process.env.NODE_ENV === 'test'
     plugins: [
       ['css-modules-transform', {
         preprocessCss: './preprocess.cjs',
-        extensions: ['.module.scss']
+        extensions: ['.module.scss'],
+        generateScopedName: './generateScopedName.cjs'
       }],
       'react-require'
     ]
@@ -22,7 +23,8 @@ module.exports = process.env.NODE_ENV === 'test'
     plugins: [
       ['css-modules-transform', {
         preprocessCss: './preprocess.cjs',
-        extensions: ['.module.scss']
+        extensions: ['.module.scss'],
+        generateScopedName: './generateScopedName.cjs'
       }],
       'react-require'
     ]

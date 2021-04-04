@@ -23,6 +23,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
+    "test:ci": "jest --ci",
     "build:js": "babel --extensions \".ts,.tsx\" lib --out-dir dist --ignore \"**/*.test.tsx\"",
     "build:dts": "tsc",
     "build": "npm run build:js && npm run build:dts",

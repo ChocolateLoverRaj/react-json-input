@@ -29,7 +29,8 @@
           "lib/valueFromSchema.ts",
           "**/*.test.tsx",
           "preprocess.cjs",
-          "babel.config.cjs"
+          "babel.config.cjs",
+          "generateScopedName.cjs"
         ]
       }
     ]

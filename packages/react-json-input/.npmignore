@@ -3,3 +3,4 @@ tsconfig.json
 lib
 babel.config.cjs
 preprocess.cjs
+generateScopedName.cjs

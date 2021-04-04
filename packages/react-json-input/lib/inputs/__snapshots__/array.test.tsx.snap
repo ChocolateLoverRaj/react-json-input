@@ -52,3 +52,38 @@ exports[`Component cannot add element 1`] = `
   </div>
 </body>
 `;
+
+exports[`Component errors 1`] = `
+<body>
+  <div>
+    <tr>
+      <td>
+        <span
+          title="Error with elements 0,1"
+        >
+          ✗
+        </span>
+      </td>
+      <th
+        class="react-json-input__lib_InputName.module.scss__inputName"
+      />
+      <td />
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td />
+      <th
+        class="react-json-input__lib_InputName.module.scss__inputName"
+      >
+        [+]
+      </th>
+      <td>
+        <button>
+          New Element
+        </button>
+      </td>
+    </tr>
+  </div>
+</body>
+`;

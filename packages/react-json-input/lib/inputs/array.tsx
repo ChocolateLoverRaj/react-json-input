@@ -50,7 +50,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     onInputDataChange([...inputData, { input, state }])
   }
 
-  const arrayErrorMessage = errors !== undefined &&
+  const arrayErrorMessage = errors.length !== 0 &&
     `Error with elements ${errors.map(({ dataPath }) => dataPath.split('/', 2)[1]).toString()}`
 
   return (

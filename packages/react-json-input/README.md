@@ -22,8 +22,14 @@ to install the package.
 
 ## Usage
 ```js
+// Named imports
 import { JsonInput, valueFromSchema }  from '@chocolateloverraj/react-json-input'
+
+// You'll probably need this for controlled mode
 import { useState } from 'react'
+
+// Include the `dist/index.css` file in some way
+import '@chocolateloverraj/react-json-input/dist/index.css'
 
 // This is the main editor. Detailed docs will be in future
 <JsonInput />

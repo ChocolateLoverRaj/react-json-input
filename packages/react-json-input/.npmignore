@@ -1,2 +1,6 @@
 tsconfig.json
 .eslintrc.json
+lib
+babel.config.cjs
+preprocess.cjs
+generateScopedName.cjs

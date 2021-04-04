@@ -9,11 +9,19 @@
     "declaration": true,
     "strictNullChecks": true,
     "outDir": "dist",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "module": "ES6",
+    "rootDir": "lib",
+    "moduleResolution": "Node",
+    "emitDeclarationOnly": true,
+    "target": "ES5"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "scss.d.ts"
+  ],
+  "exclude": [
+    "./dist/**/*"
   ]
 }

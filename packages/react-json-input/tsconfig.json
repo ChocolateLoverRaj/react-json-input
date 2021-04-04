@@ -22,7 +22,6 @@
     "scss.d.ts"
   ],
   "exclude": [
-    "**/*.test.tsx",
     "./dist/**/*"
   ]
 }

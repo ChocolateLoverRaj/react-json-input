@@ -30,6 +30,10 @@ jobs:
         with:
           path: packages/node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/package.json', 'packages/package-lock.json') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "No cache found"
+          exit 1
       - uses: actions/setup-node@v1
         with:
           node-version: 14

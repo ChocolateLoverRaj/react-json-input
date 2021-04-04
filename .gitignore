@@ -1,7 +1,3 @@
-# Compiled Files
-lib/**/*.js
-**/*.d.ts
-
 # Logs
 logs
 *.log

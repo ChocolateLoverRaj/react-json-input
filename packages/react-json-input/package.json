@@ -24,7 +24,7 @@
     "lint": "eslint .",
     "test": "jest",
     "test:ci": "jest --ci",
-    "build:js": "babel --extensions \".ts,.tsx\" lib --out-dir dist --ignore \"**/*.test.tsx\"",
+    "build:js": "babel --extensions \".ts,.tsx\" lib --out-dir dist --ignore \"**/*.test.tsx\",\"lib/scss.d.ts\"",
     "build:dts": "tsc",
     "build": "npm run build:js && npm run build:dts",
     "prepack": "npm run build"

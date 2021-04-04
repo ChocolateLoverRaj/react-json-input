@@ -5,7 +5,8 @@
         "acai",
         "chocolateloverraj",
         "nextjs",
-        "npmrc"
+        "npmrc",
+        "preinstall"
     ],
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove",

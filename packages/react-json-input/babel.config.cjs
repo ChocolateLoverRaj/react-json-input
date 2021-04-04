@@ -16,7 +16,8 @@ module.exports = process.env.NODE_ENV === 'test'
   }
   : {
     presets: [
-      ['@babel/preset-env', { modules: false, targets: { node: 14 } }],
+      // Node 12 because next.js doesn't support nullish ??
+      ['@babel/preset-env', { modules: false, targets: { node: 12 } }],
       '@babel/preset-typescript',
       '@babel/preset-react'
     ],

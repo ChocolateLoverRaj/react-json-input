@@ -54,6 +54,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.1",
-    "@chocolateloverraj/react-json-input": "^2.0.2"
+    "@chocolateloverraj/react-json-input": "^2.0.2",
+    "antd": "^4.15.0",
+    "@ant-design/icons": "^4.6.2"
   }
 }

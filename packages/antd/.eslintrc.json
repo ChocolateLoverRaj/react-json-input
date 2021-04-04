@@ -24,7 +24,7 @@
         "missingExports": true,
         "unusedExports": true,
         "ignoreExports": [
-          "lib/index.ts",
+          "lib/index.tsx",
           "**/*.test.tsx",
           "babel.config.cjs"
         ]

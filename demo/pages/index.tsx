@@ -8,14 +8,19 @@ const schema: JSONSchema7 = {
   anyOf: [{
     type: 'string'
   }, {
-    type: 'array'
+    type: 'array',
+    items: [{
+      type: 'string'
+    }],
+    minItems: 1,
+    maxItems: 1
   }]
 }
 
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
   const [pathStyle, setPathStyle] = useState(false)
-  const [value, setValue] = useState(['first element', 'second element'])
+  const [value, setValue] = useState(['An element'])
 
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)

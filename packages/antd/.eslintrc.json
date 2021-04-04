@@ -1,0 +1,34 @@
+{
+  "root": true,
+  "extends": [
+    "standard-with-typescript",
+    "plugin:import/typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react-hooks",
+    "import"
+  ],
+  "ignorePatterns": [
+    "dist",
+    "**/*.snap"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "import/no-unused-modules": [
+      2,
+      {
+        "missingExports": true,
+        "unusedExports": true,
+        "ignoreExports": [
+          "lib/index.ts",
+          "**/*.test.tsx",
+          "babel.config.cjs"
+        ]
+      }
+    ]
+  }
+}

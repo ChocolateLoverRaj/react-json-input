@@ -2,6 +2,7 @@
   "name": "local-peer-and-dev-dependencies-are-hard",
   "private": true,
   "dependencies": {
+    "@chocolateloverraj/react-json-input": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

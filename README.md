@@ -15,3 +15,18 @@ Then do
 npm i @chocolateloverraj/react-json-input
 ```
 to install the package.
+
+## Usage
+```js
+import { JsonInput, valueFromSchema }  from '@chocolateloverraj/react-json-input'
+import { useState } from 'react'
+
+// This is the main editor. Detailed docs will be in future
+<JsonInput />
+
+// This is helpful if you want a controlled value but want to get an initial value based on the schema
+const [value, setValue] = useState(valueFromSchema(mySchema))
+
+<JsonInput value={value} onChange={setValue} />
+<OtherComponent magicProp={value}>
+```

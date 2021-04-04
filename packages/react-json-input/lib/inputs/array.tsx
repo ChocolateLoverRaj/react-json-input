@@ -35,7 +35,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
 
   // itemSchemas, including the newItemSchema
   const fullItemSchemas = [...arraySchema(schema, value.length + 1)]
-  const itemSchemas = fullItemSchemas.slice(0, -1)
+  const itemSchemas = fullItemSchemas.slice(0, value.length)
   const minItems = schema.minItems ?? 0
   const [newItemSchema] = fullItemSchemas.slice(value.length)
   const canAddNewItem = newItemSchema !== undefined
@@ -156,7 +156,6 @@ const arrayInput: Input<any[], SelectedInput[]> = {
   isType: (value, schema, inputs) => {
     if (!(value instanceof Array)) return false
     const itemSchemas = [...arraySchema(schema, value.length)]
-    console.log(itemSchemas)
     for (let i = 0; i < value.length; i++) {
       const item = value[i]
       const itemSchema = itemSchemas[i]

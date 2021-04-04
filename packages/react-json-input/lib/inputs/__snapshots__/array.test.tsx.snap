@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component can add element 1`] = `
+<body>
+  <div>
+    <tr>
+      <td>
+        <span>
+          ✓
+        </span>
+      </td>
+      <th
+        class="react-json-input__lib_InputName.module.scss__inputName"
+      />
+      <td />
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td />
+      <th
+        class="react-json-input__lib_InputName.module.scss__inputName"
+      >
+        [+]
+      </th>
+      <td>
+        <button>
+          New Element
+        </button>
+      </td>
+    </tr>
+  </div>
+</body>
+`;
+
+exports[`Component cannot add element 1`] = `
+<body>
+  <div>
+    <tr>
+      <td>
+        <span>
+          ✓
+        </span>
+      </td>
+      <th
+        class="react-json-input__lib_InputName.module.scss__inputName"
+      />
+      <td />
+      <td />
+      <td />
+    </tr>
+  </div>
+</body>
+`;

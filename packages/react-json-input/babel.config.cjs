@@ -24,7 +24,8 @@ module.exports = process.env.NODE_ENV === 'test'
       ['css-modules-transform', {
         preprocessCss: './preprocess.cjs',
         extensions: ['.module.scss'],
-        generateScopedName: './generateScopedName.cjs'
+        generateScopedName: './generateScopedName.cjs',
+        extractCss: './dist/index.css'
       }],
       'react-require'
     ]

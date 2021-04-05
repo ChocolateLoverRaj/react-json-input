@@ -21,9 +21,12 @@ jobs:
           node-version: 14
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-  react-json-input:
+  packages:
     needs: install-react
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [react-json-input, antd]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -43,4 +46,4 @@ jobs:
       - run: |
           npm ci
           npm run test:ci
-        working-directory: packages/react-json-input
+        working-directory: packages/{{matrix.folder}}

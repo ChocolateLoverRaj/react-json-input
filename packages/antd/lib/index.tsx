@@ -8,6 +8,7 @@ import DeleteButton from './DeleteButton'
 import Button from './Button'
 import InputBoolean from './InputBoolean'
 import InputNumber from './InputNumber'
+import InputString from './InputString'
 
 const JsonInputAntd = <T extends unknown = any>(props: Partial<Props<T>>): JSX.Element => {
   const { inputs } = props
@@ -24,6 +25,11 @@ const JsonInputAntd = <T extends unknown = any>(props: Partial<Props<T>>): JSX.E
           return {
             ...input,
             Component: InputNumber
+          }
+        case 'string':
+          return {
+            ...input,
+            Component: InputString
           }
         default:
           return input

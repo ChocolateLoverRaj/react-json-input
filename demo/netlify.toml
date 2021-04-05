@@ -1,5 +1,5 @@
 [build]
-  command = "cd ../packages/react-json-input && npm i && npm run build && cd ../../demo && npm run build"
+  command = "cd .. && npm ci && cd packages/react-json-input && npm i && npm run build && cd ../../demo && npm run build"
   publish = "out"
 
 [[plugins]]

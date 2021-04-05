@@ -1,6 +1,5 @@
 import React, { MouseEventHandler, useContext } from 'react'
 import arraySchema from '../arraySchema'
-import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import { Input, InputComponent, ControlledPropsOnChange, RowPropsWithoutChildrenOnDelete, OnSelectedInputChange, SelectedInput } from '../props'
@@ -30,7 +29,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     InputName,
     nameStyle,
     disabled,
-    readOnly
+    readOnly,
+    DeleteButton
   } = useContext(RootContext)
 
   // itemSchemas, including the newItemSchema

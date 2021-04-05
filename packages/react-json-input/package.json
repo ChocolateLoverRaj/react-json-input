@@ -1,7 +1,7 @@
 {
   "name": "@chocolateloverraj/react-json-input",
   "description": "A React component that is like a complex input element.",
-  "version": "2.0.3",
+  "version": "2.0.5",
   "author": {
     "name": "Rajas Paranjpe",
     "url": "https://github.com/ChocolateLoverRaj"
@@ -28,7 +28,7 @@
     "build:empty": "rmdir-cli dist",
     "build:js": "babel --extensions \".ts,.tsx\" lib --out-dir dist --ignore \"**/*.test.tsx\",\"lib/scss.d.ts\"",
     "build:js:watch": "babel --extensions \".ts,.tsx\" lib --out-dir dist --ignore \"**/*.test.tsx\",\"lib/scss.d.ts\" -w",
-    "build:dts": "tsc",
+    "build:dts": "tsc --project build-tsconfig.json",
     "build": "npm run build:empty && npm run build:js && npm run build:dts",
     "prepack": "npm run build"
   },

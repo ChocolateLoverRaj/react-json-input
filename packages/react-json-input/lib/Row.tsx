@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import DeleteButton from './DeleteButton'
 import { RowComponent } from './props'
 import RootContext from './RootContext'
 
 const Row: RowComponent = props => {
   const { errors, name, children, inputSelector, onDelete } = props
 
-  const { Validation, InputName } = useContext(RootContext)
+  const { Validation, InputName, DeleteButton } = useContext(RootContext)
 
   return (
     <tr>

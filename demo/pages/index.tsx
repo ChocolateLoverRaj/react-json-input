@@ -6,13 +6,7 @@ import JsonPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/acai.css'
 import never from 'never'
 
-const schema: JSONSchema7 = {
-  type: 'array',
-  items: {
-    type: 'string',
-    pattern: 'a'
-  }
-}
+const schema: JSONSchema7 = {}
 
 interface Theme {
   name: string

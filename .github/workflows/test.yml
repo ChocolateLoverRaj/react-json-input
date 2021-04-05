@@ -67,8 +67,8 @@ jobs:
           echo "No cache found"
           exit 1
       - run: |
-          ls
-          ls node_modules
+          ls node_modules/@chocolateloverraj
+          ls node_modules/@chocolateloverraj/react-json-input
       - uses: actions/setup-node@v1
         with:
           node-version: 14

@@ -23,6 +23,7 @@ const themes: Theme[] = [{
 
 const App: FC = () => {
   const [disabled, setDisabled] = useState(false)
+  const [readOnly, setReadOnly] = useState(false)
   const [pathStyle, setPathStyle] = useState(false)
   const [value, setValue] = useState([])
   const [theme, setTheme] = useState<Theme>(themes[0])
@@ -30,6 +31,10 @@ const App: FC = () => {
   const handleDisabledChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setDisabled(e.target.checked)
   }, [setDisabled])
+
+  const handleChangeReadOnly = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
+    setReadOnly(e.target.checked)
+  }, [setReadOnly])
 
   const handleChangePathStyle = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     setPathStyle(e.target.checked)
@@ -50,6 +55,10 @@ const App: FC = () => {
         Toggle disabled
       </label>
       <label>
+        <input type='checkbox' checked={readOnly} onChange={handleChangeReadOnly} />
+        Toggle readOnly
+      </label>
+      <label>
         <input type='checkbox' checked={pathStyle} onChange={handleChangePathStyle} />
         Toggle path name style
       </label>
@@ -65,6 +74,7 @@ const App: FC = () => {
         value={value}
         onChange={setValue}
         disabled={disabled}
+        readOnly={readOnly}
         nameStyle={pathStyle
           ? { style: 'path' }
           : { style: 'indent', spaces: 4 }}

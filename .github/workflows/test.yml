@@ -15,7 +15,7 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/package.json', 'packages/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json', 'package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -61,7 +61,7 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/package.json', 'packages/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json', 'package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"

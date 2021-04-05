@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        folder: [react-json-input, antd]
+        folder: [demo, packages/react-json-input, packages/antd]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -66,10 +66,13 @@ jobs:
         run: |
           echo "No cache found"
           exit 1
+      - run: |
+          ls
+          ls node_modules
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - run: |
           npm ci
           npm run lint
-        working-directory: packages/${{matrix.folder}}
+        working-directory: ${{matrix.folder}}

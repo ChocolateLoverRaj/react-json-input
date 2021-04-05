@@ -119,6 +119,23 @@ interface DeleteButtonProps {
 
 export type DeleteButtonComponent = ComponentType<DeleteButtonProps>
 
+export type SelectPropsOnChange = (newValue: string | number) => void
+
+export interface SelectProps {
+  value: string | number
+  onChange: SelectPropsOnChange
+  disabled: boolean
+  children: ReactNode
+}
+
+export type SelectComponent = ComponentType<SelectProps>
+
+export interface OptionProps {
+  value: string | number
+}
+
+export type OptionComponent = ComponentType<OptionProps>
+
 export interface BaseProps {
   Container: ContainerComponent
   InputChooser: InputChooserComponent
@@ -129,6 +146,8 @@ export interface BaseProps {
   Row: RowComponent
   InputName: InputNameComponent
   DeleteButton: DeleteButtonComponent
+  Select: SelectComponent
+  Option: OptionComponent
   schema: JSONSchema7
   inputs: Array<Input<any, any>>
   readOnly: boolean

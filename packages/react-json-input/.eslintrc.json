@@ -29,7 +29,8 @@
           "**/*.test.tsx",
           "preprocess.cjs",
           "babel.config.cjs",
-          "generateScopedName.cjs"
+          "generateScopedName.cjs",
+          "lib/props.ts"
         ]
       }
     ]

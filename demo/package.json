@@ -9,10 +9,10 @@
   },
   "peerDependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "@chocolateloverraj/react-json-input": "file:../packages/react-json-input"
   },
   "dependencies": {
-    "@chocolateloverraj/react-json-input": "file:../packages/react-json-input",
     "@chocolateloverraj/react-json-input-antd": "file:../packages/antd",
     "never": "^1.0.3"
   },

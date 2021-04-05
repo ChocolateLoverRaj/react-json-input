@@ -9,6 +9,8 @@ import ValidationErrors from './ValidationErrors'
 import InputName from './InputName'
 import defaultInputs from './defaultInputs'
 import DeleteButton from './DeleteButton'
+import Select from './Select'
+import Option from './Option'
 
 const defaultProps: BaseProps = {
   Container: Container,
@@ -20,6 +22,8 @@ const defaultProps: BaseProps = {
   DeleteButton: DeleteButton,
   Row: Row,
   InputName: InputName,
+  Select: Select,
+  Option: Option,
   schema: {},
   inputs: defaultInputs,
   readOnly: false,

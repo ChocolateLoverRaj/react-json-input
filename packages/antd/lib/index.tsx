@@ -5,6 +5,7 @@ import ValidationErrors from './ValidationErrors'
 import Select from './Select'
 import Option from './Option'
 import DeleteButton from './DeleteButton'
+import Button from './Button'
 
 const JsonInputAntd = <T extends unknown = any>(props: Partial<Props<T>>): JSX.Element => {
   return (
@@ -14,6 +15,7 @@ const JsonInputAntd = <T extends unknown = any>(props: Partial<Props<T>>): JSX.E
       Select={Select}
       Option={Option}
       DeleteButton={DeleteButton}
+      Button={Button}
       {...props}
     />
   )

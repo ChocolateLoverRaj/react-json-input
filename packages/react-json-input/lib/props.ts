@@ -1,6 +1,7 @@
 import { ErrorObject } from 'ajv'
 import { JSONSchema7 } from 'json-schema'
-import { ComponentType, DetailsHTMLAttributes, ReactNode } from 'react'
+import { MouseEventHandler, ComponentType, DetailsHTMLAttributes, ReactNode } from 'react'
+
 import { NameStyle } from './nameStyle'
 
 export type OnChange<T> = (newValue: T) => void
@@ -136,6 +137,13 @@ export interface OptionProps {
 
 export type OptionComponent = ComponentType<OptionProps>
 
+export interface ButtonProps {
+  onClick?: MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean
+}
+
+export type ButtonComponent = ComponentType<ButtonProps>
+
 export interface BaseProps {
   Container: ContainerComponent
   InputChooser: InputChooserComponent
@@ -148,6 +156,7 @@ export interface BaseProps {
   DeleteButton: DeleteButtonComponent
   Select: SelectComponent
   Option: OptionComponent
+  Button: ButtonComponent
   schema: JSONSchema7
   inputs: Array<Input<any, any>>
   readOnly: boolean

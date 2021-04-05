@@ -43,8 +43,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: echo "{{matrix.folder}}"
+      - run: echo "${{matrix.folder}}"
       - run: |
           npm ci
           npm run test:ci
-        working-directory: packages/{{matrix.folder}}
+        working-directory: packages/${{matrix.folder}}

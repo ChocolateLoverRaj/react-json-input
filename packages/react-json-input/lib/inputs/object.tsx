@@ -2,7 +2,6 @@ import { JSONSchema7Definition } from 'json-schema'
 import never from 'never'
 import React, { ChangeEventHandler, useContext } from 'react'
 import definitionToSchema from '../definitionToSchema'
-import DeleteButton from '../DeleteButton'
 import getSubName from '../getSubName'
 import getValidInput from '../getValidInput'
 import isAnyOf from '../isAnyOf'
@@ -33,7 +32,8 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
     InputChooser,
     ValidationErrors,
     disabled,
-    readOnly
+    readOnly,
+    DeleteButton
   } = useContext(RootContext)
 
   const required = schema.required ?? []

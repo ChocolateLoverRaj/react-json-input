@@ -55,6 +55,7 @@ jobs:
           node-version: 14
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+        working-directory: demo
   install:
     runs-on: ubuntu-latest
     steps:

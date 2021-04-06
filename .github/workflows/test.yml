@@ -79,7 +79,7 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json', 'package-lock.json') }}
-      - run: ls -c node_modules/@chocolateloverraj
+      - run: ls -l node_modules/@chocolateloverraj
       - uses: actions/cache@v2
         id: cache-react-json-input
         env:
@@ -105,7 +105,7 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json', 'package-lock.json') }}
-      - run: ls -c node_modules/@chocolateloverraj
+      - run: ls -l node_modules/@chocolateloverraj
       - uses: actions/cache@v2
         id: cache-react-json-input
         env:
@@ -117,7 +117,7 @@ jobs:
         run: |
           echo "No cache found"
           exit 1
-      - run: ls -c node_modules/@chocolateloverraj
+      - run: ls -l node_modules/@chocolateloverraj
       - run: ls node_modules/@chocolateloverraj/react-json-input/dist
       - uses: actions/setup-node@v1
         with:

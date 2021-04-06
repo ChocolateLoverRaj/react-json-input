@@ -308,7 +308,7 @@ jobs:
         with:
           node-version: 14
       - if: steps.cache-react-json-input-antd-dist.outputs.cache-hit != 'true'
-        run: run build
+        run: npm run build
         working-directory:
           packages/antd
   lint-demo:

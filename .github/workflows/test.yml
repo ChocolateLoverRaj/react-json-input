@@ -21,12 +21,10 @@ jobs:
           node-version: 14
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
-  test:
+  test-react-json-input:
     needs: install-react
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        folder: [react-json-input, antd]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -46,13 +44,10 @@ jobs:
       - run: |
           npm ci
           npm run test:ci
-        working-directory: packages/${{matrix.folder}}
-  lint:
+        working-directory: packages/react-json-input
+  lint-react-json-input:
     needs: install-react
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        folder: [demo, packages/react-json-input, packages/antd]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -66,13 +61,54 @@ jobs:
         run: |
           echo "No cache found"
           exit 1
-      - run: |
-          ls node_modules/@chocolateloverraj
-          ls node_modules/@chocolateloverraj/react-json-input
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - run: |
           npm ci
           npm run lint
-        working-directory: ${{matrix.folder}}
+        working-directory: packages/react-json-input
+  build-react-json-input:
+    needs: install-react
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: cache-react-json-input
+        with:
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci
+          npm run build
+        working-directory:
+          packages/react-json-input
+  lint-antd:
+    needs: build-react-json-input
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: cache-react-json-input
+        with:
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "No cache found"
+          exit 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: |
+          npm ci
+          npm run lint
+        working-directory: packages/antd

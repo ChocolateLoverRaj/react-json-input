@@ -14,10 +14,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -32,10 +30,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-antd-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -50,10 +46,8 @@ jobs:
         env:
           cache-name: cache-demo-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          demo
+          path: demo/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('demo/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -68,10 +62,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - if: steps.cache-react-json-input.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"
@@ -105,10 +97,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true' || steps.cache-react-json-input.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"
@@ -116,9 +106,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          npm ci
-          npm run test:ci
+      - run: npm run test:ci
         working-directory: packages/react-json-input
   lint-react-json-input:
     needs: [install, install-react-json-input]
@@ -137,10 +125,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true' || steps.cache-react-json-input.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"
@@ -148,9 +134,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          npm ci
-          npm run lint
+      - run: npm run lint
         working-directory: packages/react-json-input
   build-react-json-input:
     needs: [install, install-react-json-input]
@@ -169,10 +153,8 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true' || steps.cache-react-json-input.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"
@@ -182,17 +164,13 @@ jobs:
         env:
           cache-name: cache-react-json-input-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - if: steps.cache-react-json-input.outputs.cache-hit != 'true'
-        run: |
-          npm ci
-          npm run build
+        run: npm run build
         working-directory:
           packages/react-json-input
   lint-antd:
@@ -212,28 +190,22 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-antd
         env:
           cache-name: cache-react-json-input-antd-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-dist
         env:
           cache-name: cache-react-json-input-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
       - if: 
           steps.cache.outputs.cache-hit != 'true' || 
           steps.cache-react-json-input.outputs.cache-hit != 'true' || 
@@ -245,9 +217,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          npm ci
-          npm run lint
+      - run: npm run lint
         working-directory: packages/antd
   test-antd:
     needs: [install, install-react-json-input, install-react-json-input-antd, build-react-json-input]
@@ -266,28 +236,22 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-antd
         env:
           cache-name: cache-react-json-input-antd-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-dist
         env:
           cache-name: cache-react-json-input-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
       - if: 
           steps.cache.outputs.cache-hit != 'true' || 
           steps.cache-react-json-input.outputs.cache-hit != 'true' || 
@@ -299,9 +263,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          npm ci
-          npm run test:ci
+      - run: run test:ci
         working-directory: packages/antd
   build-react-json-input-antd:
     needs: [install, install-react-json-input, install-react-json-input-antd, build-react-json-input]
@@ -320,28 +282,22 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-antd
         env:
           cache-name: cache-react-json-input-antd-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-dist
         env:
           cache-name: cache-react-json-input-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
       - if: 
           steps.cache.outputs.cache-hit != 'true' || 
           steps.cache-react-json-input.outputs.cache-hit != 'true' || 
@@ -355,17 +311,13 @@ jobs:
         env:
           cache-name: cache-react-json-input-antd-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd') }}
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - if: steps.cache-react-json-input.outputs.cache-hit != 'true'
-        run: |
-          npm ci
-          npm run build
+        run: run build
         working-directory:
           packages/antd
   lint-demo:
@@ -385,46 +337,36 @@ jobs:
         env:
           cache-name: cache-react-json-input-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-antd
         env:
           cache-name: cache-react-json-input-antd-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-demo
         env:
           cache-name: cache-demo-node-modules
         with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
-        working-directory:
-          demo
+          path: demo/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('demo/package-lock.json') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-dist
         env:
           cache-name: cache-react-json-input-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/react-json-input
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
       - uses: actions/cache@v2
         id: cache-react-json-input-antd-dist
         env:
           cache-name: cache-react-json-input-antd-dist
         with:
-          path: dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.') }}
-        working-directory:
-          packages/antd
+          path: packages/antd/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd') }}
       - if: 
           steps.cache.outputs.cache-hit != 'true' || 
           steps.cache-react-json-input.outputs.cache-hit != 'true' || 
@@ -438,7 +380,5 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          npm ci
-          npm run lint
+      - run: npm run lint
         working-directory: demo

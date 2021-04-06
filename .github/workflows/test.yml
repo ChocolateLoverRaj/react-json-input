@@ -254,7 +254,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: run test:ci
+      - run: npm run test:ci
         working-directory: packages/antd
   build-react-json-input-antd:
     needs: [install, install-react-json-input, install-react-json-input-antd, build-react-json-input]

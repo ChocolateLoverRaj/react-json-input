@@ -104,10 +104,34 @@ jobs:
         run: |
           echo "No cache found"
           exit 1
+      - run: ls node_modules/@chocolateloverraj/react-json-input/dist
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - run: |
           npm ci
           npm run lint
+        working-directory: packages/antd
+  test-antd:
+    needs: build-react-json-input
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: cache-react-json-input
+        with:
+          path: packages/react-json-input/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/react-json-input') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "No cache found"
+          exit 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: |
+          npm ci
+          npm run test:ci
         working-directory: packages/antd

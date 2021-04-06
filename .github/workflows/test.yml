@@ -82,6 +82,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
+      - run: ls -c node_modules
       - run: ls -c node_modules/@chocolateloverraj
       - if: steps.cache.outputs.cache-hit != 'true'
         run: |

@@ -372,7 +372,7 @@ jobs:
           steps.cache-react-json-input.outputs.cache-hit != 'true' || 
           steps.cache-react-json-input-antd.outputs.cache-hit != 'true' ||
           steps.cache-demo.outputs.cache-hit != 'true' ||
-          steps.cache-react-json-input-dist.outputs.cache-hit != 'true'
+          steps.cache-react-json-input-dist.outputs.cache-hit != 'true' ||
           steps.cache-react-json-input-antd-dist.outputs.cache-hit != 'true'
         run: |
           echo "No cache found"

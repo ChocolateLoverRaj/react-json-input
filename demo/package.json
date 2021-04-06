@@ -2,7 +2,6 @@
   "name": "demo",
   "private": true,
   "scripts": {
-    "preinstall": "cd .. && npm i",
     "build": "next build",
     "lint": "eslint .",
     "dev": "next"

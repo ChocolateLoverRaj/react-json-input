@@ -160,7 +160,7 @@ jobs:
           echo "No cache found"
           exit 1
       - uses: actions/cache@v2
-        id: cache-react-json-input
+        id: cache-react-json-input-dist
         env:
           cache-name: cache-react-json-input-dist
         with:
@@ -169,7 +169,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - if: steps.cache-react-json-input.outputs.cache-hit != 'true'
+      - if: steps.cache-react-json-input-dist.outputs.cache-hit != 'true'
         run: npm run build
         working-directory:
           packages/react-json-input

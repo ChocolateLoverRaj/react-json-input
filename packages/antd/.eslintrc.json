@@ -12,7 +12,6 @@
     "import"
   ],
   "ignorePatterns": [
-    "lib/scss.d.ts",
     "dist",
     "**/*.snap"
   ],
@@ -25,12 +24,9 @@
         "missingExports": true,
         "unusedExports": true,
         "ignoreExports": [
-          "lib/index.ts",
+          "lib/index.tsx",
           "**/*.test.tsx",
-          "preprocess.cjs",
-          "babel.config.cjs",
-          "generateScopedName.cjs",
-          "lib/props.ts"
+          "babel.config.cjs"
         ]
       }
     ]

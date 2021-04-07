@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ES2019",
+      "DOM"
+    ],
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "declaration": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "downlevelIteration": true,
+    "module": "ES6",
+    "rootDir": "lib",
+    "moduleResolution": "Node",
+    "emitDeclarationOnly": true,
+    "target": "ES5"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "./dist/**/*"
+  ]
+}

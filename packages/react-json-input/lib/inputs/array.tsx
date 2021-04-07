@@ -30,7 +30,8 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
     nameStyle,
     disabled,
     readOnly,
-    DeleteButton
+    DeleteButton,
+    Button
   } = useContext(RootContext)
 
   // itemSchemas, including the newItemSchema
@@ -142,7 +143,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           <td></td>
           <InputName name={getSubName(name, '[+]', nameStyle)} />
           <td>
-            <button onClick={handleNewElement} disabled={disabled || readOnly}>New Element</button>
+            <Button onClick={handleNewElement} disabled={disabled || readOnly}>New Element</Button>
           </td>
         </tr>
       )}

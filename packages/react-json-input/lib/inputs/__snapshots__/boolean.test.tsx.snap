@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`readOnly 1`] = `
+<body>
+  <div>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <span>
+              ✓
+            </span>
+          </td>
+          <th
+            class="react-json-input__lib_InputName.module.scss__inputName"
+          />
+          <td>
+            <input
+              disabled=""
+              type="checkbox"
+            />
+          </td>
+          <td>
+            <select
+              disabled=""
+            >
+              <option
+                value="0"
+              >
+                boolean
+              </option>
+            </select>
+          </td>
+          <td />
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+`;

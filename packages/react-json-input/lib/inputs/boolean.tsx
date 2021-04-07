@@ -20,8 +20,7 @@ const BooleanInputComponent: InputComponent<boolean> = props => {
         type='checkbox'
         checked={value}
         onChange={handleChange}
-        readOnly={readOnly}
-        disabled={disabled}
+        disabled={disabled || readOnly}
       />
     </Row>
   )

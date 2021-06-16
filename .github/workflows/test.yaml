@@ -70,9 +70,7 @@ jobs:
           version: 6.7.6
       - run: pnpm i
         working-directory: demo
-      - run: |-
-          pnpm run build
-          touch .nojekyll
+      - run: pnpm run build
         working-directory: demo
       - uses: sauloxd/review-apps@v1.3.3
         with:

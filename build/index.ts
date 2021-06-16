@@ -127,7 +127,7 @@ const workflow = {
           run: 'pnpm i',
           'working-directory': 'demo'
         }, {
-          run: 'pnpm run build\ntouch .nojekyll',
+          run: 'pnpm run build',
           'working-directory': 'demo'
         }, {
           uses: 'sauloxd/review-apps@v1.3.3',

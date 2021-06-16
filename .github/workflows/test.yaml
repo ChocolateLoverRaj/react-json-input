@@ -30,6 +30,10 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm i
   deploy:
+    needs:
+      - install
+      - build-react-json-input
+      - build-antd
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -68,7 +72,7 @@ jobs:
         working-directory: demo
       - uses: sauloxd/review-apps@v1.3.3
         with:
-          build-cmd: pnpm run build && touch .nojekyll
+          build-cmd: cd demo && pnpm run build && touch .nojekyll
           dist: out
   lint-react-json-input:
     needs:

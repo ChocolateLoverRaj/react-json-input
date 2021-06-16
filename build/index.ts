@@ -89,6 +89,10 @@ const getDependenciesSteps = (...dependencies: string[]): any[] => dependencies.
   : []
 /* eslint-enable @typescript-eslint/indent */
 
+const deployDependencies = ['react-json-input', 'antd']
+
+const needsMapFn = (dependency: string): string => `build-${dependency}`
+
 const workflow = {
   name: 'Test',
   on: {
@@ -113,10 +117,11 @@ const workflow = {
       }]
     },
     deploy: {
+      needs: [installJobName, ...deployDependencies.map(needsMapFn)],
       ...runsOn,
       steps: [
         clone(checkout),
-        ...getDependenciesSteps('react-json-input', 'antd'),
+        ...getDependenciesSteps(...deployDependencies),
         clone(cacheInstall),
         clone(setupPnpm), {
           run: 'pnpm i',
@@ -124,7 +129,7 @@ const workflow = {
         }, {
           uses: 'sauloxd/review-apps@v1.3.3',
           with: {
-            'build-cmd': 'pnpm run build && touch .nojekyll',
+            'build-cmd': 'cd demo && pnpm run build && touch .nojekyll',
             dist: 'out'
           }
         }
@@ -132,7 +137,7 @@ const workflow = {
     },
     ...Object.fromEntries(packages
       .map(({ name, dir, test, build, dependencies }) => {
-        const needs = [installJobName, ...dependencies.map(dependency => `build-${dependency}`)]
+        const needs = [installJobName, ...dependencies.map(needsMapFn)]
         const dependencySteps = getDependenciesSteps(...dependencies)
         const setupSteps = [checkout, ...dependencySteps, cacheInstall, setupNode, setupPnpm, {
           run: 'pnpm i',

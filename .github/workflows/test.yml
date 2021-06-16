@@ -25,10 +25,6 @@ jobs:
           version: 6.7.6
       - if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm i
-      - run: |
-          ls demo
-          ls packages/react-json-input
-          ls packages/antd
       - if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm run build
         working-directory: packages/react-json-input

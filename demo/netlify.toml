@@ -1,14 +1,12 @@
 [build]
   command = "
     cd .. && 
-    npm ci && 
+    pnpm i && 
     
-    cd packages/react-json-input && 
-    npm i &&
+    cd packages/react-json-input &&
     npm run build && 
     
-    cd ../antd && 
-    npm i &&
+    cd ../antd &&
     npm run build && 
     
     cd ../../demo && 

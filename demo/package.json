@@ -6,14 +6,14 @@
     "lint": "eslint .",
     "dev": "next"
   },
-  "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "@chocolateloverraj/react-json-input": "file:../packages/react-json-input"
-  },
   "dependencies": {
-    "@chocolateloverraj/react-json-input-antd": "file:../packages/antd",
-    "never": "^1.0.3"
+    "@chocolateloverraj/react-json-input": "workspace:^2.0.6",
+    "@chocolateloverraj/react-json-input-antd": "workspace:^1.0.0",
+    "ajv": "^8.6.0",
+    "antd": "^4.15.5",
+    "never": "^1.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

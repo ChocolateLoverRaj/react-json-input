@@ -14,7 +14,8 @@
     "rootDir": "lib",
     "moduleResolution": "Node",
     "emitDeclarationOnly": true,
-    "target": "ES5"
+    "target": "ES5",
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "**/*.ts",

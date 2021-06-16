@@ -91,6 +91,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
           ]))
         }
 
+        /* eslint-disable @typescript-eslint/indent */
         const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = !required.includes(key)
           ? () => {
             const filterFn = ([currentKey]: [string, ...unknown[]]): boolean => currentKey !== key
@@ -98,6 +99,7 @@ const ObjectInputComponent: InputComponent<object, ObjectInputData> = props => {
             onInputStateChange(new Map([...inputState].filter(filterFn)))
           }
           : undefined
+        /* eslint-enable @typescript-eslint/indent */
 
         const entryErrors = errors
           ?.filter(error => error.dataPath.startsWith(`/${key}`))

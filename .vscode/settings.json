@@ -6,8 +6,13 @@
         "antd",
         "chocolateloverraj",
         "nextjs",
+        "nojekyll",
         "npmrc",
-        "preinstall"
+        "pnpm",
+        "posthtml",
+        "preinstall",
+        "rfdc",
+        "sauloxd"
     ],
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove",

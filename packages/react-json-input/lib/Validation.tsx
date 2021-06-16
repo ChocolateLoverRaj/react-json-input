@@ -7,6 +7,7 @@ const Validation: ValidationComponent = props => {
 
   const { ValidationNoErrors, ValidationErrors } = useContext(RootContext)
 
+  /* eslint-disable @typescript-eslint/indent */
   return errors === undefined || errors.length === 0
     ? <ValidationNoErrors />
     : (
@@ -16,6 +17,7 @@ const Validation: ValidationComponent = props => {
           .join('\n')}
       />
     )
+  /* eslint-enable @typescript-eslint/indent */
 }
 
 export default Validation

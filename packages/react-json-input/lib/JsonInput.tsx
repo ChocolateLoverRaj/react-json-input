@@ -1,10 +1,14 @@
-import Ajv from 'ajv'
+import FakeAjv from 'ajv'
 import never from 'never'
 import React, { useState } from 'react'
 import defaultProps from './defaultProps'
 import getValidInput from './getValidInput'
 import { OnChange, Props, SelectedInput } from './props'
 import RootContext from './RootContext'
+
+const Ajv = typeof FakeAjv === 'function'
+  ? FakeAjv
+  : (FakeAjv as any).default as typeof FakeAjv
 
 const JsonInput = <T extends any = any>(props: Partial<Props<T>>): JSX.Element => {
   const {

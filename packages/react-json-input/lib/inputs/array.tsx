@@ -78,6 +78,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
           onChange([...value.slice(0, i), newValue, ...value.slice(i + 1)])
         }
 
+        /* eslint-disable @typescript-eslint/indent */
         const handleDelete: RowPropsWithoutChildrenOnDelete | undefined = value.length > minItems
           ? () => {
             if (items instanceof Array) {
@@ -118,6 +119,7 @@ const ArrayInputComponent: InputComponent<any[], Array<SelectedInput<any>>> = pr
             }
           }
           : undefined
+        /* eslint-enable @typescript-eslint/indent */
 
         const handleSelectedInputChange: OnSelectedInputChange<any> = newSelectedInput => {
           onInputDataChange([...inputData.slice(0, i), newSelectedInput, ...inputData.slice(i + 1)])

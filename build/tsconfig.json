@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "target": "ES2019",
+    "moduleResolution": "Node",
+    "esModuleInterop": true
+  }
+}

@@ -1,0 +1,294 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm i
+  lint-react-json-input:
+    needs:
+      - install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: packages/react-json-input
+      - run: pnpm run lint
+        working-directory: packages/react-json-input
+  test-react-json-input:
+    needs:
+      - install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: packages/react-json-input
+      - run: pnpm run test:ci
+        working-directory: packages/react-json-input
+  build-react-json-input:
+    needs:
+      - install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: cache-build-react-json-input
+        with:
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('packages/react-json-input') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm i
+        working-directory: packages/react-json-input
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm run build
+        working-directory: packages/react-json-input
+  lint-antd:
+    needs:
+      - install
+      - build-react-json-input
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache-build-0
+        env:
+          cache-name: cache-build-react-json-input
+        with:
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('packages/react-json-input') }}
+      - if: steps.cache-build-0.outputs.cache-hit != 'true'
+        run: |-
+          echo Missing Dependencies
+          exit 1
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: packages/antd
+      - run: pnpm run lint
+        working-directory: packages/antd
+  test-antd:
+    needs:
+      - install
+      - build-react-json-input
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache-build-0
+        env:
+          cache-name: cache-build-react-json-input
+        with:
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('packages/react-json-input') }}
+      - if: steps.cache-build-0.outputs.cache-hit != 'true'
+        run: |-
+          echo Missing Dependencies
+          exit 1
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: packages/antd
+      - run: pnpm run test:ci
+        working-directory: packages/antd
+  build-antd:
+    needs:
+      - install
+      - build-react-json-input
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache-build-0
+        env:
+          cache-name: cache-build-react-json-input
+        with:
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('packages/react-json-input') }}
+      - if: steps.cache-build-0.outputs.cache-hit != 'true'
+        run: |-
+          echo Missing Dependencies
+          exit 1
+      - uses: actions/cache@v2
+        id: cache
+        env:
+          cache-name: cache-build-antd
+        with:
+          path: packages/antd/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd')
+            }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm i
+        working-directory: packages/antd
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm run build
+        working-directory: packages/antd
+  lint-demo:
+    needs:
+      - install
+      - build-react-json-input
+      - build-antd
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        id: cache-build-0
+        env:
+          cache-name: cache-build-react-json-input
+        with:
+          path: packages/react-json-input/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('packages/react-json-input') }}
+      - uses: actions/cache@v2
+        id: cache-build-1
+        env:
+          cache-name: cache-build-antd
+        with:
+          path: packages/antd/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('packages/antd')
+            }}
+      - if: steps.cache-build-0.outputs.cache-hit != 'true' ||
+          steps.cache-build-1.outputs.cache-hit != 'true'
+        run: |-
+          echo Missing Dependencies
+          exit 1
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: demo
+      - run: pnpm run lint
+        working-directory: demo
+  lint-build:
+    needs:
+      - install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{
+            hashFiles('**/pnpm-lock.yaml') }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.7.6
+      - run: pnpm i
+        working-directory: build
+      - run: pnpm run lint
+        working-directory: build

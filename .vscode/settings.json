@@ -8,7 +8,8 @@
         "nextjs",
         "npmrc",
         "pnpm",
-        "preinstall"
+        "preinstall",
+        "rfdc"
     ],
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove",

@@ -89,6 +89,7 @@ const workflow = {
     ...Object.fromEntries(packages
       .map(({ name, dir, test, build, dependencies }) => {
         const needs = [installJobName, ...dependencies.map(dependency => `build-${dependency}`)]
+        /* eslint-disable @typescript-eslint/indent */
         const dependencySteps = dependencies.length > 0
           ? [
             ...dependencies.map((dependency, index) => {
@@ -109,6 +110,7 @@ const workflow = {
             }
           ]
           : []
+        /* eslint-enable @typescript-eslint/indent */
         const setupSteps = [checkout, ...dependencySteps, cacheInstall, setupNode, setupPnpm, {
           run: 'pnpm i',
           'working-directory': dir

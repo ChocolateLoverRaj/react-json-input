@@ -70,9 +70,13 @@ jobs:
           version: 6.7.6
       - run: pnpm i
         working-directory: demo
+      - run: |-
+          pnpm run build
+          touch .nojekyll
+        working-directory: demo
       - uses: sauloxd/review-apps@v1.3.3
         with:
-          build-cmd: cd demo && pnpm run build && touch .nojekyll
+          build-cmd: echo "Already built"
           dist: out
   lint-react-json-input:
     needs:

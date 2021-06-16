@@ -133,7 +133,7 @@ const workflow = {
           uses: 'sauloxd/review-apps@v1.3.3',
           with: {
             'build-cmd': 'echo "Already built"',
-            dist: 'out'
+            dist: 'demo/out'
           }
         }
       ]

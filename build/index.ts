@@ -78,7 +78,10 @@ const workflow = {
       steps: [clone(checkout), {
         id: installCacheId,
         ...clone(cacheInstall)
-      }, setupNode, {
+      }, {
+        if: ifInstallCache,
+        ...setupNode
+      }, {
         if: ifInstallCache,
         ...clone(setupPnpm)
       }, {

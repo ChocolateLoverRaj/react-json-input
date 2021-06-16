@@ -2,7 +2,7 @@
   "name": "demo",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "next build && next export",
     "lint": "eslint .",
     "dev": "next"
   },

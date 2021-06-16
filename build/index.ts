@@ -66,6 +66,29 @@ const cacheInstall = {
 
 const getCacheKey = (dir: string): string => `\${{ runner.os }}-build-\${{ env.cache-name }}-\${{ hashFiles('${dir}') }}`
 
+/* eslint-disable @typescript-eslint/indent */
+const getDependenciesSteps = (...dependencies: string[]): any[] => dependencies.length > 0
+  ? [
+    ...dependencies.map((dependency, index) => {
+      const { dir } = packages.find(({ name }) => name === dependency) ??
+    never(`No package with name: ${dependency}`)
+      return {
+        uses: cache,
+        id: `cache-build-${index}`,
+        env: { 'cache-name': `cache-build-${dependency}` },
+        with: { path: `${dir}/dist`, key: getCacheKey(dir) }
+      }
+    }),
+    {
+      if: dependencies
+        .map((_dependency, index) => `steps.cache-build-${index}.outputs.cache-hit != 'true'`)
+        .join(' || '),
+      run: 'echo Missing Dependencies\nexit 1'
+    }
+  ]
+  : []
+/* eslint-enable @typescript-eslint/indent */
+
 const workflow = {
   name: 'Test',
   on: {
@@ -89,31 +112,28 @@ const workflow = {
         run: 'pnpm i'
       }]
     },
+    deploy: {
+      ...runsOn,
+      steps: [
+        clone(checkout),
+        ...getDependenciesSteps('react-json-input', 'antd'),
+        clone(cacheInstall),
+        clone(setupPnpm), {
+          run: 'pnpm i',
+          'working-directory': 'demo'
+        }, {
+          uses: 'sauloxd/review-apps@v1.3.3',
+          with: {
+            'build-cmd': 'pnpm run build && touch .nojekyll',
+            dist: 'out'
+          }
+        }
+      ]
+    },
     ...Object.fromEntries(packages
       .map(({ name, dir, test, build, dependencies }) => {
         const needs = [installJobName, ...dependencies.map(dependency => `build-${dependency}`)]
-        /* eslint-disable @typescript-eslint/indent */
-        const dependencySteps = dependencies.length > 0
-          ? [
-            ...dependencies.map((dependency, index) => {
-              const { dir } = packages.find(({ name }) => name === dependency) ??
-              never(`No package with name: ${dependency}`)
-              return {
-                uses: cache,
-                id: `cache-build-${index}`,
-                env: { 'cache-name': `cache-build-${dependency}` },
-                with: { path: `${dir}/dist`, key: getCacheKey(dir) }
-              }
-            }),
-            {
-              if: dependencies
-                .map((_dependency, index) => `steps.cache-build-${index}.outputs.cache-hit != 'true'`)
-                .join(' || '),
-              run: 'echo Missing Dependencies\nexit 1'
-            }
-          ]
-          : []
-        /* eslint-enable @typescript-eslint/indent */
+        const dependencySteps = getDependenciesSteps(...dependencies)
         const setupSteps = [checkout, ...dependencySteps, cacheInstall, setupNode, setupPnpm, {
           run: 'pnpm i',
           'working-directory': dir

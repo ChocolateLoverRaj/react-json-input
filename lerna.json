@@ -1,0 +1,9 @@
+{
+  "packages": [
+    "packages/*",
+    "demo",
+    "build"
+  ],
+  "version": "independent",
+  "npmClient": "pnpm"
+}

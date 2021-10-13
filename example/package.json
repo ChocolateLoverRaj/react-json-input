@@ -1,7 +1,0 @@
-{
-  "name": "example",
-  "private": true,
-  "dependencies": {
-    "@chocolateloverraj/react-json-input": "^0.1.0"
-  }
-}

@@ -1,3 +1,9 @@
+# Pnpm
+pnpm-lock.yaml
+
+# Next.js
+out
+
 # Logs
 logs
 *.log

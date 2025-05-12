@@ -1,3 +1,6 @@
+> [!WARNING]  
+> I no longer use or maintain this library. I don't really code in JavaScript anymore (I switched to Rust). If you want to maintain or fork it let me know (you can email me) and I can put the link here.
+
 [![License](https://badgen.net/github/license/ChocolateLoverRaj/react-json-input)](https://github.com/ChocolateLoverRaj/react-json-input/blob/main/LICENSE)
 [![TS-Standard - Typescript Standard Style Guide](https://badgen.net/badge/code%20style/ts-standard/blue?icon=typescript)](https://github.com/standard/ts-standard)
 [![Test](https://github.com/ChocolateLoverRaj/react-json-input/actions/workflows/test.yml/badge.svg)](https://github.com/ChocolateLoverRaj/react-json-input/actions/workflows/test.yml)
